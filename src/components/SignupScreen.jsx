@@ -352,7 +352,7 @@ const Register = () => {
         </div>
       </div>
       <div className="register-hero">
-        <img src={getImagePath("defaultProfiles.png")} alt="Savor the flavor, Share the love" />
+        <img src={getImagePath("signup-hero.png")} alt="Savor the flavor, Share the love" />
         <h3>Savor the flavor, <br />Share the love</h3>
       </div>
       {showFileSizeError && (
