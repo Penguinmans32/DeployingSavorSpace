@@ -107,7 +107,7 @@ export default function ProfilePage() {
     fetchUserData();
   }, []);
 
-  const defaultProfilePic = "/images/defaultProfiles.png";
+  const defaultProfilePic = "/DeployingSavorSpace/images/defaultProfiles.png";
 
   const [imgSrc, setImgSrc] = useState(profilePic || defaultProfilePic);
 
@@ -261,10 +261,10 @@ export default function ProfilePage() {
               {latestRecipes.map(recipe => (
                 <div key={recipe.recipeID} className="recipe-item">
                   <img 
-                    src={formatImageURL(recipe.imageURL) || "/images/defaultProfiles.png"} 
+                    src={formatImageURL(recipe.imageURL) || "/DeployingSavorSpace/images/defaultProfiles.png"} 
                     alt={recipe.title} 
                     onError={(e) => {
-                      e.target.src = "/images/defaultProfiles.png";
+                      e.target.src = "/DeployingSavorSpace/images/defaultProfiles.png";
                     }}
                   />
                   <p className="profile-recipe-title">{recipe.title}</p>
@@ -282,10 +282,10 @@ export default function ProfilePage() {
               {popularRecipes.map(recipe => (
                 <div key={recipe.recipeID} className="recipe-item">
                   <img 
-                    src={formatImageURL(recipe.imageURL) || "/images/defaultProfiles.png"} 
+                    src={formatImageURL(recipe.imageURL) || "/DeployingSavorSpace/images/defaultProfiles.png"} 
                     alt={recipe.title} 
                     onError={(e) => {
-                      e.target.src = "/images/defaultProfiles.png";
+                      e.target.src = "/DeployingSavorSpace/images/defaultProfiles.png";
                     }}
                   />
                   <p className="profile-recipe-title">{recipe.title}</p>

@@ -12,7 +12,7 @@ const AdminManageComments = () => {
   const navigate = useNavigate();
   const [profilePic, setProfilePic] = useState('');
 
-  const defaultProfile = "/images/defaultProfile.png"
+  const defaultProfile = "/DeployingSavorSpace/images/defaultProfile.png"
 
   useEffect(() => {
     fetchAdmin();
@@ -169,7 +169,7 @@ const AdminManageComments = () => {
 
       <aside className="sidebar">
         <div className="logo">
-          <img src="/images/savorspaceLogo.png" alt="SavorSpace Logo" className="logo-image" />
+          <img src="/DeployingSavorSpace/images/savorspaceLogo.png" alt="SavorSpace Logo" className="logo-image" />
           <div className="logo-text">
             <h2>SavorSpace</h2>
             <p>Admin</p>

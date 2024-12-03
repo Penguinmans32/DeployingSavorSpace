@@ -12,7 +12,7 @@ const AdminManagePosts = () => {
   const navigate = useNavigate();
   const [profilePic, setProfilePic] = useState('');
 
-  const defaultProfile = "/images/defaultProfile.png"
+  const defaultProfile = "/DeployingSavorSpace/images/defaultProfile.png"
 
   useEffect(() => {
     fetchAdmin();
@@ -137,7 +137,7 @@ const AdminManagePosts = () => {
 
       <aside className="sidebar">
         <div className="logo">
-          <img src="/images/savorspaceLogo.png" alt="SavorSpace Logo" className="logo-image" />
+          <img src="/DeployingSavorSpace/images/savorspaceLogo.png" alt="SavorSpace Logo" className="logo-image" />
           <div className="logo-text">
             <h2>SavorSpace</h2>
             <p>Admin</p>
@@ -196,7 +196,7 @@ const AdminManagePosts = () => {
                           alt={post.title}
                           onError={(e) => {
                             e.target.onerror = null;
-                            e.target.src = '/images/default-recipe.jpg';
+                            e.target.src = '/DeployingSavorSpace/images/default-recipe.jpg';
                           }}
                         />
                       </div>
