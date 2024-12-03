@@ -22,11 +22,11 @@ const RecipeCard = ({ image, title, description, onClick }) => {
       <div className="recipe-content">
         <div className="recipe-meta">
           <span className="recipe-cuisine">
-            <img src={getImagePath=("dish.png")} alt="Cuisine" />
+            <img src={getImagePath("dish.png")} alt="Cuisine" />
             Filipino Dish
           </span>
           <span className="recipe-course">
-            <img src={getImagePath=("dish.png")} alt="Course" />
+            <img src={getImagePath("dish.png")} alt="Course" />
             Main Course
           </span>
         </div>
