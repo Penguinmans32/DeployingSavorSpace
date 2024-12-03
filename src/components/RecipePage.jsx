@@ -4,6 +4,8 @@ import { MdAccessTime, MdClose } from "react-icons/md";
 import { useNavigate } from 'react-router-dom';
 import '../styles/RecipePageStyles.css';
 
+import { getImagePath } from '../utils/imageUtils';
+
 
 export default function RecipePage() {
   const [currentIndex, setCurrentIndex] = useState(0);

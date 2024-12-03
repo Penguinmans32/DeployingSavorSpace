@@ -7,6 +7,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import api from '../api/axiosConfig';
 import '../styles/SignupStyles.css';
 
+import { getImagePath } from '../utils/imageUtils';
+
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 };

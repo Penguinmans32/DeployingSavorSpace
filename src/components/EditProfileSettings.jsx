@@ -3,7 +3,7 @@ import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
 import '../styles/EditProfileStyles.css';
 
-import { getImagePath } from '../utils/ImagePath';
+import { getImagePath } from '../utils/imageUtils';
 
 const EditProfileSettings = () => {
     const [profilePic, setProfilePic] = useState(null);

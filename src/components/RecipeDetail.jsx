@@ -4,6 +4,8 @@ import { MdAccessTime, MdFavorite, MdFavoriteBorder, MdShare } from "react-icons
 import { useNavigate, useParams } from 'react-router-dom';
 import '../styles/RecipeDetail.css';
 
+import { getImagePath } from '../utils/imageUtils';
+
 export default function RecipeDetail() {
   const { recipeId } = useParams();
   const navigate = useNavigate();
