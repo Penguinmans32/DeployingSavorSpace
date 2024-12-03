@@ -9,5 +9,13 @@ export default defineConfig({
     alias: {
       '@images': '/public/images'
     }
+  },
+  build: {
+    outDir: 'dist',
+    rollupOptions: {
+      output: {
+        manualChunks: undefined
+      }
+    }
   }
 })

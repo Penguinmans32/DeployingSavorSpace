@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useState } from 'react';
-import { Link, Route, BrowserRouter as Router, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Route, HashRouter as Router, Routes, useLocation, useNavigate } from 'react-router-dom';
 import AboutUs from './components/AboutUs';
 import AccountSettings from './components/AccountSettings';
 import AdminDashboard from './components/AdminDashboard';
@@ -240,7 +240,7 @@ const App = () => {
 
 
   return (
-    <Router>
+    <Router basename="/DeployingSavorSpace">
       <div>
         <Navbar profilePic={profilePic} username={username} isAuthenticated={isAuthenticated} handleLogout={handleLogout} />
         <Routes>
@@ -249,44 +249,29 @@ const App = () => {
           <Route path="/recipes" element={<RecipePage />} />
           <Route path="/community" element={<PostingPage isAuthenticated={isAuthenticated} />} />
           <Route path="/profile" element={<ProfilePage />} />
-            <Route path="/profile/settings/*" element={<SettingsPage />}>
-              {/* Routes for Settings Sections */}
-              <Route path="general" element={<GeneralSettings />} />
-              <Route path="edit-profile" element={<EditProfileSettings />} />
-              <Route path="account" element={<AccountSettings />} />
-              <Route path="privacy" element={<PrivacySettings />} />
-              <Route path="notifications" element={<NotificationSettings />} />
-            </Route>
-          <Route path="edit-profile" element={<EditProfileSettings />} />
-          <Route path="notifications" element={<NotificationSettings />} />
+          <Route path="/profile/settings/*" element={<SettingsPage />}>
+            <Route path="general" element={<GeneralSettings />} />
+            <Route path="edit-profile" element={<EditProfileSettings />} />
+            <Route path="account" element={<AccountSettings />} />
+            <Route path="privacy" element={<PrivacySettings />} />
+            <Route path="notifications" element={<NotificationSettings />} />
+          </Route>
+          <Route path="/edit-profile" element={<EditProfileSettings />} />
+          <Route path="/notifications" element={<NotificationSettings />} />
           <Route path="/login" element={<Login onLogin={handleLogin} />} />
           <Route path="/register" element={<Register />} />
-          <Route
-           path="/admin/login" 
-           element={<PrivateRoute path="/admin/login" element={<AdminLogin />} isAuthenticated={isAuthenticated} role={role} />} />
-          <Route 
-          path="/admin/signup" 
-          element={<PrivateRoute path= "/admin/signup" element={<AdminSignup />} isAuthenticated={isAuthenticated} role={role} />} />
-          <Route 
-          path="/admin/dashboard" 
-          element={<AdminDashboard />} />
-          <Route 
-          path="/admin/ManageUser" 
-          element={<AdminManageAccounts />} />
-          <Route 
-          path="/admin/ManagePosts" 
-          element={<AdminManagePosts />} />
-          <Route 
-          path="/admin/ManageComments" 
-          element={<AdminManageComments />} />
-          <Route 
-          path="/admin/ManageNotifications" 
-          element={<AdminManageNotifications/>} />
-          <Route path="/about-us" element={<AboutUs />} /> {}
-          <Route path='/404' element={<NotFound />} />
-          <Route path='/reactivate-account' element={<ReactivateAccount />} />
-          <Route path='/deactivate-account' element={<AccountDeactivation />} />
-          <Route path='/forgot-password' element= {<ForgotPasswordForm />} />
+          <Route path="/admin/login" element={<PrivateRoute path="/admin/login" element={<AdminLogin />} isAuthenticated={isAuthenticated} role={role} />} />
+          <Route path="/admin/signup" element={<PrivateRoute path="/admin/signup" element={<AdminSignup />} isAuthenticated={isAuthenticated} role={role} />} />
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/admin/ManageUser" element={<AdminManageAccounts />} />
+          <Route path="/admin/ManagePosts" element={<AdminManagePosts />} />
+          <Route path="/admin/ManageComments" element={<AdminManageComments />} />
+          <Route path="/admin/ManageNotifications" element={<AdminManageNotifications/>} />
+          <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/404" element={<NotFound />} />
+          <Route path="/reactivate-account" element={<ReactivateAccount />} />
+          <Route path="/deactivate-account" element={<AccountDeactivation />} />
+          <Route path="/forgot-password" element={<ForgotPasswordForm />} />
           <Route path="/community/recipe/:recipeId" element={<RecipeDetail />} />
           <Route path="/community/:recipeId" element={<PostingPage />} />
         </Routes>
