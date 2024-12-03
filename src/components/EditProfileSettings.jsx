@@ -28,7 +28,7 @@ const EditProfileSettings = () => {
     const [passwordError, setPasswordError] = useState('');
     const [updateMessage, setUpdateMessage] = useState('');
     
-    const defaultProfilePic = "/src/images/defaultProfiles.png";
+    const defaultProfilePic = "/images/defaultProfiles.png";
     
   
     const [imgSrc, setImgSrc] = useState(profilePic || defaultProfilePic);

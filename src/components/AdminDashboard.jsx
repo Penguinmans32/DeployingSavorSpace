@@ -15,7 +15,6 @@ import {
 import React, { useEffect, useState } from 'react';
 import { Bar, Line, Radar } from 'react-chartjs-2';
 import { Link, useNavigate } from 'react-router-dom';
-import defaultProfile from '../images/defaultProfiles.png';
 import '../styles/AdminDashboard.css';
 
 ChartJS.register(
@@ -59,6 +58,8 @@ const AdminDashboard = () => {
     labels: [],
     datasets: []
   });
+
+  const defaultProfile = "/images/defaultProfile.png"
 
 
 
@@ -396,7 +397,7 @@ const AdminDashboard = () => {
     <div className="admin-dashboard">
       <aside className="sidebar">
         <div className="logo">
-          <img src="/src/images/savorspaceLogo.png" alt="SavorSpace Logo" className="logo-image" />
+          <img src="/images/savorspaceLogo.png" alt="SavorSpace Logo" className="logo-image" />
           <div className="logo-text">
             <h2>SavorSpace</h2>
             <p>Admin</p>

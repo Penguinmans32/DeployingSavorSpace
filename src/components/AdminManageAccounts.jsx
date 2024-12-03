@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import defaultProfile from '../images/defaultProfiles.png';
 import '../styles/AdminManageAccounts.css';
 
 const AdminManageAccounts = () => {
@@ -15,6 +14,8 @@ const AdminManageAccounts = () => {
   const [editUser, setEditUser] = useState(null);
   const navigate = useNavigate();
   const [profilePic, setProfilePic] = useState('');
+
+  const defaultProfile = "/images/defaultProfile.png"
 
 
   useEffect(() => {
@@ -213,7 +214,7 @@ const AdminManageAccounts = () => {
 )}
       <aside className="sidebar">
         <div className="logo">
-          <img src="/src/images/savorspaceLogo.png" alt="SavorSpace Logo" className="logo-image" />
+          <img src="/images/savorspaceLogo.png" alt="SavorSpace Logo" className="logo-image" />
           <div className="logo-text">
             <h2>SavorSpace</h2>
             <p>Admin</p>

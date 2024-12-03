@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import defaultProfile from '../images/defaultProfiles.png';
 import '../styles/AdminManageComments.css';
 
 const AdminManageComments = () => {
@@ -12,6 +11,8 @@ const AdminManageComments = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [profilePic, setProfilePic] = useState('');
+
+  const defaultProfile = "/images/defaultProfile.png"
 
   useEffect(() => {
     fetchAdmin();
@@ -168,7 +169,7 @@ const AdminManageComments = () => {
 
       <aside className="sidebar">
         <div className="logo">
-          <img src="/src/images/savorspaceLogo.png" alt="SavorSpace Logo" className="logo-image" />
+          <img src="/images/savorspaceLogo.png" alt="SavorSpace Logo" className="logo-image" />
           <div className="logo-text">
             <h2>SavorSpace</h2>
             <p>Admin</p>

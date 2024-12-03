@@ -111,7 +111,7 @@ const fetchComments = async () => {
           userID: comment.userID,
           username: comment.username,
           userEmail: comment.userEmail,
-          userImageURL: comment.userImageURL || '/src/images/defaultProfiles.png'
+          userImageURL: comment.userImageURL || '/images/defaultProfiles.png'
       })) : [];
 
       console.log('Formatted comments:', formattedComments);
@@ -417,7 +417,7 @@ const handleDeleteComment = async (commentId) => {
             src={formatImageURL(recipe.imageURL)}
             alt={recipe.title}
             onError={(e) => {
-              e.target.src = '/src/images/defaultProfiles.png';
+              e.target.src = '/images/defaultProfiles.png';
             }}
           />
         </div>
@@ -433,7 +433,7 @@ const handleDeleteComment = async (commentId) => {
                   alt={recipe.user.fullName}
                   className="author-image"
                   onError={(e) => {
-                    e.target.src = '/src/images/defaultProfiles.png';
+                    e.target.src = '/images/defaultProfiles.png';
                   }}
                 />
                 <span>By: {recipe.user.fullName || 'Anonymous'}</span>

@@ -155,7 +155,7 @@ const RecipeComments = ({ recipeId, isVisible}) => {
   };
 
     const getImageURL = (imageURL) => {
-      if(!imageURL) return "/src/images/defaultProfiles.png";
+      if(!imageURL) return "/images/defaultProfiles.png";
 
       const cleanPath = cleanImagePath(imageURL);
       return cleanPath.startsWith('http')
@@ -228,7 +228,7 @@ const RecipeComments = ({ recipeId, isVisible}) => {
               userID: comment.userID, // Match the case from CommentDTO
               username: comment.username,
               userEmail: comment.userEmail,
-              userImageURL: comment.userImageURL || '/src/images/defaultProfiles.png'
+              userImageURL: comment.userImageURL || '/images/defaultProfiles.png'
           })) : [];
   
           console.log('Formatted comments:', formattedComments);
@@ -484,7 +484,7 @@ const confirmDeleteComment = async () => {
                                     className="comment-user-pic"
                                     onError={(e) => {
                                         console.error('Failed to load image:', comment.userImageURL);
-                                        e.target.src = "/src/images/defaultProfiles.png";
+                                        e.target.src = "/images/defaultProfiles.png";
                                     }}
                                 />
                                 <div className="comment-user-details">
@@ -772,7 +772,7 @@ const StarRating = ({ rating, onRatingChange, totalRatings = 0, onToggleComments
 
     // Get URL for any image including profile pics
     const getImageURL = (imageURL) => {
-        if(!imageURL) return "/src/images/defaultProfiles.png";
+        if(!imageURL) return "/images/defaultProfiles.png";
 
         const cleanPath = cleanImagePath(imageURL);
         return cleanPath.startsWith('http')
@@ -943,14 +943,14 @@ const StarRating = ({ rating, onRatingChange, totalRatings = 0, onToggleComments
           <img
             src={recipe.user?.imageURL
               ? getImageURL(recipe.user?.imageURL)
-              : "/src/images/defaultProfiles.png"
+              : "/images/defaultProfiles.png"
             }
             alt={`${recipe.user?.name || 'User'}'s profile`}
             className="profile-pic"
             onError={(e) => {
               console.log('Profile image failed to load:', recipe.user?.imageURL);
               setImageError(true);
-              e.target.src = "/src/images/defaultProfiles.png";
+              e.target.src = "/images/defaultProfiles.png";
             }}
           />
           <div className="community-user-content"> 

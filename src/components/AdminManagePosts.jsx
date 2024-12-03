@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import defaultProfile from '../images/defaultProfiles.png';
 import '../styles/AdminManagePosts.css';
 
 const AdminManagePosts = () => {
@@ -12,6 +11,8 @@ const AdminManagePosts = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [profilePic, setProfilePic] = useState('');
+
+  const defaultProfile = "/images/defaultProfile.png"
 
   useEffect(() => {
     fetchAdmin();
@@ -136,7 +137,7 @@ const AdminManagePosts = () => {
 
       <aside className="sidebar">
         <div className="logo">
-          <img src="/src/images/savorspaceLogo.png" alt="SavorSpace Logo" className="logo-image" />
+          <img src="/images/savorspaceLogo.png" alt="SavorSpace Logo" className="logo-image" />
           <div className="logo-text">
             <h2>SavorSpace</h2>
             <p>Admin</p>
@@ -195,7 +196,7 @@ const AdminManagePosts = () => {
                           alt={post.title}
                           onError={(e) => {
                             e.target.onerror = null;
-                            e.target.src = '/src/images/default-recipe.jpg';
+                            e.target.src = '/images/default-recipe.jpg';
                           }}
                         />
                       </div>
