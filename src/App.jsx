@@ -238,7 +238,7 @@ const App = () => {
   };
 
   return (
-    <Router basename="/DeployingSavorSpace">
+    <Router>
       <div>
         <Navbar profilePic={profilePic} username={username} isAuthenticated={isAuthenticated} handleLogout={handleLogout} />
         <Routes>
