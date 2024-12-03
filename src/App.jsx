@@ -237,8 +237,6 @@ const App = () => {
     fetchProfilePic();
   };
 
-
-
   return (
     <Router basename="/DeployingSavorSpace">
       <div>
