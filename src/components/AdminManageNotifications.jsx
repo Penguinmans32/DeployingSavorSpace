@@ -13,7 +13,7 @@ const AdminManageNotifications = () => {
   const [profilePic, setProfilePic] = useState('');
   const [flaggedComments, setFlaggedComments] = useState([]);
 
-  const defaultProfile = "/DeployingSavorSpace/images/defaultProfile.png"
+  const defaultProfile = "/images/defaultProfile.png"
 
   useEffect(() => {
     fetchAdmin();
@@ -146,7 +146,7 @@ const AdminManageNotifications = () => {
 
       <aside className="sidebar">
         <div className="logo">
-          <img src="/DeployingSavorSpace/images/savorspaceLogo.png" alt="SavorSpace Logo" className="logo-image" />
+          <img src="/images/savorspaceLogo.png" alt="SavorSpace Logo" className="logo-image" />
           <div className="logo-text">
             <h2>SavorSpace</h2>
             <p>Admin</p>

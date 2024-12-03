@@ -198,7 +198,7 @@ export default function RecipePage() {
                   src={formatImageURL(currentItem.imageURL)}
                   alt={currentItem.title}
                   onError={(e) => {
-                    e.target.src = '/DeployingSavorSpace/images/defaultProfiles.png';
+                    e.target.src = '/images/defaultProfiles.png';
                   }}
               />
             </div>
@@ -215,7 +215,7 @@ export default function RecipePage() {
                         src={formatImageURL(currentItem.user.imageURL)}
                         alt={currentItem.user.fullName}
                         onError={(e) => {
-                          e.target.src = '/DeployingSavorSpace/images/defaultProfiles.png';
+                          e.target.src = '/images/defaultProfiles.png';
                         }}
                       />
                       <span>By: {currentItem.user.fullName || 'Anonymous'}</span>
@@ -285,7 +285,7 @@ export default function RecipePage() {
                     onClick={() => handleRecipeClick(recipe.recipeID)}
                     style={{ cursor: 'pointer' }}
                     onError={(e) => {
-                      e.target.src = '/DeployingSavorSpace/images/defaultProfiles.png';
+                      e.target.src = '/images/defaultProfiles.png';
                     }}
                   />
               </div>

@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import capurasImage from '/DeployingSavorSpace/images/capuras.png';
-import chavezImage from '/DeployingSavorSpace/images/chavez.png';
-import gadianeImage from '/DeployingSavorSpace/images/gadiane.png';
-import omenImage from '/DeployingSavorSpace/images/omen.png';
-import pejanaImage from '/DeployingSavorSpace/images/pejana.png';
+import capurasImage from '/images/capuras.png';
+import chavezImage from '/images/chavez.png';
+import gadianeImage from '/images/gadiane.png';
+import omenImage from '/images/omen.png';
+import pejanaImage from '/images/pejana.png';
 import '../styles/AboutUs.css';
 
 export default function AboutUs() {

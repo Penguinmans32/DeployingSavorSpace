@@ -121,7 +121,7 @@ const Login = ({ onLogin }) => {
       </div>
     )}
       <div className="login-hero">
-        <img src="/DeployingSavorSpace/images/login-hero.png" alt="Welcome back to SavorSpace" />
+        <img src="/images/login-hero.png" alt="Welcome back to SavorSpace" />
         <h3>Welcome back, Chef!</h3>
       </div>
       <div className="arrow-container"></div>
