@@ -465,7 +465,7 @@ return (
       <footer className="footer">
         <div className="footer-content">
           <div className="footer-logo">
-            <img src={getImagePath=("dish.png")} alt="SavorSpace Logo" className="footer-logo-img" />
+            <img src={getImagePath("dish.png")} alt="SavorSpace Logo" className="footer-logo-img" />
             <h2>Savor<span>Space</span></h2>
           </div>
           
