@@ -29,6 +29,7 @@ import RecipePage from './components/RecipePage';
 import SettingsPage from './components/Settings';
 import Register from './components/SignupScreen';
 import './styles/MainStyles.css';
+import { getImagePath } from './utils/imageUtils';
 
 // Navbar Component
 const Navbar = ({ profilePic, handleLogout, isAuthenticated }) => {
@@ -97,7 +98,7 @@ const Navbar = ({ profilePic, handleLogout, isAuthenticated }) => {
       {showNavbar && (
         <nav className="navbar">
           <Link to="/" className="navbar-logo">
-            <img src="/src/images/savorspaceLogo.png" alt="SavorSpace Logo" className="navbar-logo" />
+            <img src={getImagePath("savorspaceLogo.png")} alt="SavorSpace Logo" className="navbar-logo" />
           </Link>
           <h1>
             Savor<span className='highlight'>Space</span>

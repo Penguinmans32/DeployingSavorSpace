@@ -123,7 +123,7 @@ const Login = ({ onLogin }) => {
       </div>
     )}
       <div className="login-hero">
-        <img src={getImagePath("adobo-hero.png")} alt="Welcome back to SavorSpace" />
+        <img src={getImagePath("login-hero.png")} alt="Welcome back to SavorSpace" />
         <h3>Welcome back, Chef!</h3>
       </div>
       <div className="arrow-container"></div>

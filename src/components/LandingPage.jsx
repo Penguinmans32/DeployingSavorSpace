@@ -26,7 +26,7 @@ const RecipeCard = ({ image, title, description, onClick }) => {
             Filipino Dish
           </span>
           <span className="recipe-course">
-            <img src={getImagePath("dish.png")} alt="Course" />
+            <img src={getImagePath("course.png")} alt="Course" />
             Main Course
           </span>
         </div>
@@ -147,13 +147,13 @@ const LandingPage = () => {
     },
 
     {
-      image: getImagePath("adobo-hero.png"),
+      image: getImagePath("sinigang-hero.png"),
       title: "Sinigang na Baboy",
       description: "Sinigang is a traditional Filipino sour soup made from tamarind, tomatoes, and various vegetables such as eggplant, radish, and spinach. Typically made with pork, shrimp, or beef.",
     },
 
     {
-      image: getImagePath("adobo-hero.png"),
+      image: getImagePath("pancit-hero.png"),
       title: "Pancit Canton",
       description: "Pancit is a beloved Filipino noodle dish that comes in many regional varieties, often made with rice noodles, vegetables, and a choice of proteins like chicken, pork, or shrimp.",
     }
@@ -161,7 +161,7 @@ const LandingPage = () => {
 
   const communityCards = [
     {
-      image: getImagePath("adobo-hero.png"),
+      image: getImagePath("graham-card.jpg"),
       title: "Mango Graham",
       description: "A delightful Filipino dessert made with layers of graham crackers, whipped cream, mangoes, and condensed milk. Perfect for any occasion!",
       likes: "2.4k",
@@ -170,7 +170,7 @@ const LandingPage = () => {
     },
 
     {
-      image: getImagePath("adobo-hero.png"),
+      image: getImagePath("bicolexpress-card.avif"),
       title: "Bicol Express",
       description: "A spicy Filipino dish made with pork, coconut milk, shrimp paste, and chili peppers. A popular dish from the Bicol region.",
       likes: "1.8k",
@@ -179,7 +179,7 @@ const LandingPage = () => {
     },
 
     {
-      image: getImagePath("adobo-hero.png"),
+      image: getImagePath("crispypata-card.jpg"),
       title: "Crispy Pata",
       description: "A Filipino dish of deep fried pork leg, making the skin crispy while keeping the meat tender inside. Served with a soy-vinegar dipping sauce.",
       likes: "3.2k",
@@ -188,7 +188,7 @@ const LandingPage = () => {
     },
 
     {
-      image: getImagePath("adobo-hero.png"),
+      image: getImagePath("sisig-card.jpg"),
       title: "Sisig",
       description: "A sizzling Filipino dish made with chopped pig's face and ears, seasoned with calamansi and chili peppers. A perfect pulutan!",
       likes: "4.1k",
@@ -197,7 +197,7 @@ const LandingPage = () => {
     },
 
     {
-      image: getImagePath("adobo-hero.png"),
+      image: getImagePath("maja-card.jpg"),
       title: "Maja Blanca",
       description: "The Philippines' most celebrated dish - a whole roasted pig with perfectly crispy skin and tender meat inside. A staple at Filipino festivities.",
       likes: "5.6k",
@@ -208,21 +208,21 @@ const LandingPage = () => {
 
   const chefCard = [
       {
-        image: getImagePath("adobo-hero.png"),
+        image: getImagePath("chef1.png"),
         name: "Lily Anderson",
         title: "October's Top Sharer",
         shares: "365 Recipes Shared",
       },
 
       {
-        image: getImagePath("adobo-hero.png"),
+        image: getImagePath("chef2.png"),
         name: "Emma Nguyen",
         title: "November's Top Sharer",
         shares: "234 Recipes Shared",
       },
 
       {
-        image: getImagePath("adobo-hero.png"),
+        image: getImagePath("chef3.png"),
         name: "Lucas Martinez",
         title: "December's Top Sharer",
         shares: "300 Recipes Shared",
@@ -232,32 +232,32 @@ const LandingPage = () => {
 
   const teamCard = [
     {
-      image: getImagePath("adobo-hero.png"),
+      image: getImagePath("omen.png"),
       name: "Jared Karl Omen",
       title: "Full-Stack Developer",
     },
 
     {
-      image: getImagePath("adobo-hero.png"),
+      image: getImagePath("capuras.png"),
       name: "Vaness Leonard Capuras",
       title: "Full-Stack Developer",
       link: "https://penguinmanportfolio.netlify.app/",
     },
 
     {
-      image: getImagePath("adobo-hero.png"),
+      image: getImagePath("chavez.png"),
       name: "Jes Emanuel Chavez",
       title: "Full-Stack Developer",
     },
     
     {
-      image: getImagePath("adobo-hero.png"),
+      image: getImagePath("gadiane.png"),
       name: "John Karl Gadiane",
       title: "Full-Stack Developer",
     },
 
     {
-      image: getImagePath("adobo-hero.png"),
+      image: getImagePath("pejana.png"),
       name: "Mary Therese Pejana",
       title: "Full-Stack Developer",
     }
@@ -465,7 +465,7 @@ return (
       <footer className="footer">
         <div className="footer-content">
           <div className="footer-logo">
-            <img src={getImagePath("dish.png")} alt="SavorSpace Logo" className="footer-logo-img" />
+            <img src={getImagePath("savorspaceLogo.png")} alt="SavorSpace Logo" className="footer-logo-img" />
             <h2>Savor<span>Space</span></h2>
           </div>
           

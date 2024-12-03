@@ -61,9 +61,6 @@ const AdminDashboard = () => {
 
   const defaultProfile = getImagePath("defaultProfile.png");
 
-
-
-
   useEffect(() => {
     fetchAdmin();
     fetchUsers();
