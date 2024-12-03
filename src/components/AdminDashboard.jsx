@@ -30,7 +30,7 @@ ChartJS.register(
   Legend
 );
 
-
+import { getImagePath } from '../utils/imageUtils';
 
 const AdminDashboard = () => {
   const [admin, setAdmin] = useState(null);
@@ -59,7 +59,7 @@ const AdminDashboard = () => {
     datasets: []
   });
 
-  const defaultProfile = "/images/defaultProfile.png"
+  const defaultProfile = getImagePath("defaultProfile.png");
 
 
 

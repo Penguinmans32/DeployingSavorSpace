@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/AdminManageComments.css';
 
+import { getImagePath } from '../utils/imageUtils';
+
 const AdminManageComments = () => {
   const [admin, setAdmin] = useState(null);
   const [comments, setComments] = useState([]);
@@ -12,7 +14,7 @@ const AdminManageComments = () => {
   const navigate = useNavigate();
   const [profilePic, setProfilePic] = useState('');
 
-  const defaultProfile = "/images/defaultProfile.png"
+  const defaultProfile = getImagePath("defaultProfile.png");
 
   useEffect(() => {
     fetchAdmin();
@@ -169,7 +171,7 @@ const AdminManageComments = () => {
 
       <aside className="sidebar">
         <div className="logo">
-          <img src="/images/savorspaceLogo.png" alt="SavorSpace Logo" className="logo-image" />
+          <img src={getImagePath("savorspaceLogo.png")} alt="SavorSpace Logo" className="logo-image" />
           <div className="logo-text">
             <h2>SavorSpace</h2>
             <p>Admin</p>

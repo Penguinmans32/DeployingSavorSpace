@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import '../styles/MainStyles.css';
 import { FaUtensils, FaClock, FaHeart, FaShare, FaArrowRight} from 'react-icons/fa';
 
+import { getImagePath } from '../utils/imageUtils';
+
 const CategorySection = () => {
   const categories = [
     { name: 'Breakfast', icon: '🍳' },
@@ -147,21 +149,21 @@ const CommentSection = () => {
 const HomePage = () => {
   const recipes = [
     {
-      image: "/images/adobo-hero.png",
+      image: getImagePath("adobo-hero.png"),
       title: "Chicken Adobo",
       description: "A savory Filipino dish with tender chicken in a tangy soy-vinegar sauce.",
       cookTime: "45 mins",
       difficulty: "Medium"
     },
     {
-      image: "/images/sinigang-hero.png",
+      image: getImagePath("sinigang-hero.png"),
       title: "Sinigang na Baboy",
       description: "A sour tamarind-based soup with pork and vegetables, perfect for rainy days.",
       cookTime: "1 hour",
       difficulty: "Easy"
     },
     {
-      image: "/images/pancit-hero.png",
+      image: getImagePath("pancit-hero.png"),
       title: "Pancit Canton",
       description: "Stir-fried noodles with vegetables and meat, a staple in Filipino celebrations.",
       cookTime: "30 mins",

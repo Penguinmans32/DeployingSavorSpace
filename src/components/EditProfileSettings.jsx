@@ -3,6 +3,8 @@ import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 import { useNavigate } from 'react-router-dom';
 import '../styles/EditProfileStyles.css';
 
+import { getImagePath } from '../utils/ImagePath';
+
 const EditProfileSettings = () => {
     const [profilePic, setProfilePic] = useState(null);
     const [username, setUsername] = useState('');
@@ -28,7 +30,7 @@ const EditProfileSettings = () => {
     const [passwordError, setPasswordError] = useState('');
     const [updateMessage, setUpdateMessage] = useState('');
     
-    const defaultProfilePic = "/images/defaultProfiles.png";
+    const defaultProfilePic = getImagePath("defaultProfiles.png");
     
   
     const [imgSrc, setImgSrc] = useState(profilePic || defaultProfilePic);

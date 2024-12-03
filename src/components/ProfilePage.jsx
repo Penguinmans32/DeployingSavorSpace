@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/ProfilePageStyles.css';
 import NotificationComponent from './NotificationComponent';
 
+import { getImagePath } from '../utils/imageUtils';
+
 export default function ProfilePage() {
   const [profilePic, setProfilePic] = useState(null);
   const [username, setUsername] = useState('');
@@ -107,7 +109,7 @@ export default function ProfilePage() {
     fetchUserData();
   }, []);
 
-  const defaultProfilePic = "/images/defaultProfiles.png";
+  const defaultProfilePic = getImagePath("defaultProfiles.png");
 
   const [imgSrc, setImgSrc] = useState(profilePic || defaultProfilePic);
 
@@ -261,10 +263,10 @@ export default function ProfilePage() {
               {latestRecipes.map(recipe => (
                 <div key={recipe.recipeID} className="recipe-item">
                   <img 
-                    src={formatImageURL(recipe.imageURL) || "/images/defaultProfiles.png"} 
+                    src={formatImageURL(recipe.imageURL) || getImagePath("defaultProfiles.png")} 
                     alt={recipe.title} 
                     onError={(e) => {
-                      e.target.src = "/images/defaultProfiles.png";
+                      e.target.src = getImagePath("defaultProfiles.png");
                     }}
                   />
                   <p className="profile-recipe-title">{recipe.title}</p>
@@ -282,10 +284,10 @@ export default function ProfilePage() {
               {popularRecipes.map(recipe => (
                 <div key={recipe.recipeID} className="recipe-item">
                   <img 
-                    src={formatImageURL(recipe.imageURL) || "/images/defaultProfiles.png"} 
+                    src={formatImageURL(recipe.imageURL) || getImagePath("defaultProfiles.png")} 
                     alt={recipe.title} 
                     onError={(e) => {
-                      e.target.src = "/images/defaultProfiles.png";
+                      e.target.src = getImagePath("defaultProfiles.png");
                     }}
                   />
                   <p className="profile-recipe-title">{recipe.title}</p>

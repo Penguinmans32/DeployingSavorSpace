@@ -12,6 +12,8 @@ import { createPortal } from 'react-dom';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import '../styles/PostingPage.css';
 
+import { getImagePath } from '../utils/imageUtils';
+
 
 const BACKEND_URL = 'http://localhost:8080';
 
@@ -155,7 +157,7 @@ const RecipeComments = ({ recipeId, isVisible}) => {
   };
 
     const getImageURL = (imageURL) => {
-      if(!imageURL) return "/images/defaultProfiles.png";
+      if(!imageURL) return getImagePath("defaultProfiles.png");
 
       const cleanPath = cleanImagePath(imageURL);
       return cleanPath.startsWith('http')
@@ -228,7 +230,7 @@ const RecipeComments = ({ recipeId, isVisible}) => {
               userID: comment.userID, // Match the case from CommentDTO
               username: comment.username,
               userEmail: comment.userEmail,
-              userImageURL: comment.userImageURL || '/images/defaultProfiles.png'
+              userImageURL: comment.userImageURL || getImagePath("defaultProfiles.png")
           })) : [];
   
           console.log('Formatted comments:', formattedComments);
@@ -484,7 +486,7 @@ const confirmDeleteComment = async () => {
                                     className="comment-user-pic"
                                     onError={(e) => {
                                         console.error('Failed to load image:', comment.userImageURL);
-                                        e.target.src = "/images/defaultProfiles.png";
+                                        e.target.src = getImagePath("defaultProfiles.png");
                                     }}
                                 />
                                 <div className="comment-user-details">
@@ -772,7 +774,7 @@ const StarRating = ({ rating, onRatingChange, totalRatings = 0, onToggleComments
 
     // Get URL for any image including profile pics
     const getImageURL = (imageURL) => {
-        if(!imageURL) return "/images/defaultProfiles.png";
+        if(!imageURL) return getImagePath("defaultProfiles.png");
 
         const cleanPath = cleanImagePath(imageURL);
         return cleanPath.startsWith('http')
@@ -943,14 +945,14 @@ const StarRating = ({ rating, onRatingChange, totalRatings = 0, onToggleComments
           <img
             src={recipe.user?.imageURL
               ? getImageURL(recipe.user?.imageURL)
-              : "/images/defaultProfiles.png"
+              : getImagePath("defaultProfiles.png")
             }
             alt={`${recipe.user?.name || 'User'}'s profile`}
             className="profile-pic"
             onError={(e) => {
               console.log('Profile image failed to load:', recipe.user?.imageURL);
               setImageError(true);
-              e.target.src = "/images/defaultProfiles.png";
+              e.target.src = getImagePath("defaultProfiles.png");
             }}
           />
           <div className="community-user-content"> 

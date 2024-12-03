@@ -9,6 +9,8 @@ import '../styles/LandingPageStyles.css';
 
 import { useScrollAnimation } from './useScrollAnimation';
 
+import { getImagePath } from '../utils/imageUtils';
+
 const RecipeCard = ({ image, title, description, onClick }) => {
   const cardRef = useScrollAnimation();
 
@@ -20,11 +22,11 @@ const RecipeCard = ({ image, title, description, onClick }) => {
       <div className="recipe-content">
         <div className="recipe-meta">
           <span className="recipe-cuisine">
-            <img src="/DeployingSavorSpace/images/dish.png" alt="Cuisine" />
+            <img src={getImagePath=("dish.png")} alt="Cuisine" />
             Filipino Dish
           </span>
           <span className="recipe-course">
-            <img src="/images/course.png" alt="Course" />
+            <img src={getImagePath=("dish.png")} alt="Course" />
             Main Course
           </span>
         </div>
@@ -139,19 +141,19 @@ RecipeCard.propTypes = {
 const LandingPage = () => {
   const recipeCards = [
     {
-      image: "/images/adobo-hero.png",
+      image: getImagePath("adobo-hero.png"),
       title: "Chicken Adobo",
       description: "Adobo is a Filipino dish of marinated meat, usually chicken or pork, cooked in vinegar and soy sauce. It's known for its savory and tangy flavor and is often served with rice.",
     },
 
     {
-      image: "/images/sinigang-hero.png",
+      image: getImagePath("adobo-hero.png"),
       title: "Sinigang na Baboy",
       description: "Sinigang is a traditional Filipino sour soup made from tamarind, tomatoes, and various vegetables such as eggplant, radish, and spinach. Typically made with pork, shrimp, or beef.",
     },
 
     {
-      image: "/images/pancit-hero.png",
+      image: getImagePath("adobo-hero.png"),
       title: "Pancit Canton",
       description: "Pancit is a beloved Filipino noodle dish that comes in many regional varieties, often made with rice noodles, vegetables, and a choice of proteins like chicken, pork, or shrimp.",
     }
@@ -159,7 +161,7 @@ const LandingPage = () => {
 
   const communityCards = [
     {
-      image: "/images/graham-card.jpg",
+      image: getImagePath("adobo-hero.png"),
       title: "Mango Graham",
       description: "A delightful Filipino dessert made with layers of graham crackers, whipped cream, mangoes, and condensed milk. Perfect for any occasion!",
       likes: "2.4k",
@@ -168,7 +170,7 @@ const LandingPage = () => {
     },
 
     {
-      image: "/images/bicolexpress-card.avif",
+      image: getImagePath("adobo-hero.png"),
       title: "Bicol Express",
       description: "A spicy Filipino dish made with pork, coconut milk, shrimp paste, and chili peppers. A popular dish from the Bicol region.",
       likes: "1.8k",
@@ -177,7 +179,7 @@ const LandingPage = () => {
     },
 
     {
-      image: "/images/crispypata-card.jpg",
+      image: getImagePath("adobo-hero.png"),
       title: "Crispy Pata",
       description: "A Filipino dish of deep fried pork leg, making the skin crispy while keeping the meat tender inside. Served with a soy-vinegar dipping sauce.",
       likes: "3.2k",
@@ -186,7 +188,7 @@ const LandingPage = () => {
     },
 
     {
-      image: "/images/sisig-card.jpg",
+      image: getImagePath("adobo-hero.png"),
       title: "Sisig",
       description: "A sizzling Filipino dish made with chopped pig's face and ears, seasoned with calamansi and chili peppers. A perfect pulutan!",
       likes: "4.1k",
@@ -195,7 +197,7 @@ const LandingPage = () => {
     },
 
     {
-      image: "/images/maja-card.jpg",
+      image: getImagePath("adobo-hero.png"),
       title: "Maja Blanca",
       description: "The Philippines' most celebrated dish - a whole roasted pig with perfectly crispy skin and tender meat inside. A staple at Filipino festivities.",
       likes: "5.6k",
@@ -206,21 +208,21 @@ const LandingPage = () => {
 
   const chefCard = [
       {
-        image: "/images/chef1.png",
+        image: getImagePath("adobo-hero.png"),
         name: "Lily Anderson",
         title: "October's Top Sharer",
         shares: "365 Recipes Shared",
       },
 
       {
-        image: "/images/chef2.png",
+        image: getImagePath("adobo-hero.png"),
         name: "Emma Nguyen",
         title: "November's Top Sharer",
         shares: "234 Recipes Shared",
       },
 
       {
-        image: "/images/chef3.png",
+        image: getImagePath("adobo-hero.png"),
         name: "Lucas Martinez",
         title: "December's Top Sharer",
         shares: "300 Recipes Shared",
@@ -230,32 +232,32 @@ const LandingPage = () => {
 
   const teamCard = [
     {
-      image: "/images/omen.png",
+      image: getImagePath("adobo-hero.png"),
       name: "Jared Karl Omen",
       title: "Full-Stack Developer",
     },
 
     {
-      image: "/images/capuras.png",
+      image: getImagePath("adobo-hero.png"),
       name: "Vaness Leonard Capuras",
       title: "Full-Stack Developer",
       link: "https://penguinmanportfolio.netlify.app/",
     },
 
     {
-      image: "/images/chavez.png",
+      image: getImagePath("adobo-hero.png"),
       name: "Jes Emanuel Chavez",
       title: "Full-Stack Developer",
     },
     
     {
-      image: "/images/gadiane.png",
+      image: getImagePath("adobo-hero.png"),
       name: "John Karl Gadiane",
       title: "Full-Stack Developer",
     },
 
     {
-      image: "/images/pejana.png",
+      image: getImagePath("adobo-hero.png"),
       name: "Mary Therese Pejana",
       title: "Full-Stack Developer",
     }
@@ -463,7 +465,7 @@ return (
       <footer className="footer">
         <div className="footer-content">
           <div className="footer-logo">
-            <img src="/DeployingSavorSpace/images/savorspaceLogo.png" alt="SavorSpace Logo" className="footer-logo-img" />
+            <img src={getImagePath=("dish.png")} alt="SavorSpace Logo" className="footer-logo-img" />
             <h2>Savor<span>Space</span></h2>
           </div>
           
