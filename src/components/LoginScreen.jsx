@@ -49,26 +49,14 @@ const Login = ({ onLogin }) => {
 
   const handleGoogleLogin = (e) => {
     e.preventDefault();
-    localStorage.setItem('preLoginPath', window.location.pathname);
-    
-    const baseUrl = 'https://penguinman-backend-production.up.railway.app';
-    const path = '/oauth2/authorization/google';
-    
-    const googleAuthUrl = new URL(path, baseUrl).toString();
-    
-    try {
-        new URL(googleAuthUrl);
-        window.location.href = googleAuthUrl;
-    } catch (e) {
-        console.error('Invalid auth URL:', e);
-    }
+    const googleAuthUrl = 'https://penguinman-backend-production.up.railway.app/oauth2/authorization/google';
+    window.location.replace(googleAuthUrl);
 };
 
   const handleGithubLogin = (e) => {
-    e.preventDefault();
-    localStorage.setItem('preLoginPath', window.location.pathname);
-    const githubAuthUrl = 'https://penguinman-backend-production.up.railway.app/oauth2/authorization/github';
-    window.location.replace(githubAuthUrl);
+      e.preventDefault();
+      const githubAuthUrl = 'https://penguinman-backend-production.up.railway.app/oauth2/authorization/github';
+      window.location.replace(githubAuthUrl);
   };
 
   const handleReactivate = () => {
