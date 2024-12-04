@@ -110,21 +110,6 @@ export default function SettingsPage() {
             </Link>
           </li>
           <li>
-              {showLogoutValidation && (
-                <div className="modal-backdrop">
-                  <div className="logout-confirmation">
-                    <h2>Logout</h2>
-                    <p>
-                      Heading out, Chef? No problem!<br /> You can pick up right where you
-                      left off whenever you sign back in.
-                    </p>
-                    <div className="logout-buttons">
-                      <button onClick={handleLogout}>Yes</button>
-                      <button onClick={cancelLogout}>No</button>
-                    </div>
-                  </div>
-                </div>
-              )}
             </li>
         </ul>
       </nav>
