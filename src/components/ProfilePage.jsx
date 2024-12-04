@@ -32,7 +32,7 @@ export default function ProfilePage() {
       try {
         setIsLoading(true);
         // Fetch user profile
-        const profileResponse = await fetch('http://localhost:8080/users/me', {
+        const profileResponse = await fetch('https://penguinman-backend-production.up.railway.app/users/me', {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -48,7 +48,7 @@ export default function ProfilePage() {
         setIsAuthenticated(true);
         
         // Fetch user stats
-        const statsResponse = await fetch(`http://localhost:8080/users/${profileData.id}/stats`, {
+        const statsResponse = await fetch(`https://penguinman-backend-production.up.railway.app/users/${profileData.id}/stats`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -60,7 +60,7 @@ export default function ProfilePage() {
         setUserStats(statsData);
 
         const latestRecipesResponse = await fetch(
-          `http://localhost:8080/recipes/user/${profileData.id}/latest?limit=2`, 
+          `https://penguinman-backend-production.up.railway.app/recipes/user/${profileData.id}/latest?limit=2`, 
           {
             headers: {
               'Authorization': `Bearer ${token}`,
@@ -70,7 +70,7 @@ export default function ProfilePage() {
         );
 
         const popularRecipesResponse = await fetch(
-          `http://localhost:8080/recipes/user/${profileData.id}/popular?limit=2`,
+          `https://penguinman-backend-production.up.railway.app/recipes/user/${profileData.id}/popular?limit=2`,
           {
             headers: {
               'Authorization': `Bearer ${token}`,
@@ -93,7 +93,7 @@ export default function ProfilePage() {
         if(profileData.imageURL) {
           const profilePicUrl = profileData.imageURL.startsWith('http') 
             ? profileData.imageURL 
-            : `http://localhost:8080${profileData.imageURL}`;
+            : `https://penguinman-backend-production.up.railway.app${profileData.imageURL}`;
           setProfilePic(profilePicUrl);
         } else {
           setProfilePic(null);
@@ -154,7 +154,7 @@ export default function ProfilePage() {
     if(!imageURL) return '';
     return imageURL.startsWith('http')
       ? imageURL
-      : `http://localhost:8080${imageURL}`;
+      : `https://penguinman-backend-production.up.railway.app${imageURL}`;
   };
 
   
@@ -164,7 +164,7 @@ export default function ProfilePage() {
       if (!token) return;
 
       try {
-        const response = await fetch('http://localhost:8080/users/me', {
+        const response = await fetch('https://penguinman-backend-production.up.railway.app/users/me', {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json'
@@ -191,7 +191,7 @@ export default function ProfilePage() {
         if(data.imageURL) {
           const profilePicUrl = data.imageURL.startsWith('http') 
             ? data.imageURL 
-            : `http://localhost:8080${data.imageURL}`;
+            : `https://penguinman-backend-production.up.railway.app${data.imageURL}`;
           console.log('Profile pic URL:', profilePicUrl);
           setProfilePic(profilePicUrl);
         }else {

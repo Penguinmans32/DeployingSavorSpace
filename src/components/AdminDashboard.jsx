@@ -73,7 +73,7 @@ const AdminDashboard = () => {
    const fetchMetricsData = async () => {
     try {
       const token = sessionStorage.getItem('adminToken');
-      const response = await axios.get('http://localhost:8080/admin/user-metrics', {
+      const response = await axios.get('https://penguinman-backend-production.up.railway.app/admin/user-metrics', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -175,7 +175,7 @@ const AdminDashboard = () => {
   const fetchDailyActivity = async () => {
     try {
       const token = sessionStorage.getItem('adminToken');
-      const response = await axios.get('http://localhost:8080/admin/daily-activity', {
+      const response = await axios.get('https://penguinman-backend-production.up.railway.app/admin/daily-activity', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -267,7 +267,7 @@ const AdminDashboard = () => {
   const fetchChartData = async () => {
      try {
        const token = sessionStorage.getItem('adminToken');
-       const response = await axios.get('http://localhost:8080/admin/dashboard-stats', {
+       const response = await axios.get('https://penguinman-backend-production.up.railway.app/admin/dashboard-stats', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -332,7 +332,7 @@ const AdminDashboard = () => {
       }
       console.log('Admin token:', token);
   
-      const response = await axios.get('http://localhost:8080/admin/ad', {
+      const response = await axios.get('https://penguinman-backend-production.up.railway.app/admin/ad', {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -370,7 +370,7 @@ const AdminDashboard = () => {
       }
       console.log('Admin token:', token);
   
-      const response = await axios.get('http://localhost:8080/admin/users', {
+      const response = await axios.get('https://penguinman-backend-production.up.railway.app/admin/users', {
         headers: {
           Authorization: `Bearer ${token}`,
         },

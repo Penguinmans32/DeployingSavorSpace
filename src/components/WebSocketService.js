@@ -3,7 +3,7 @@ import { Client } from '@stomp/stompjs';
 class WebSocketService {
     constructor() {
         this.client = new Client({
-            brokerURL: 'ws://localhost:8080/ws',
+            brokerURL: 'wss://penguinman-backend-production.up.railway.app/ws',
             connectHeaders: {
                 // Add any auth headers if needed
             },

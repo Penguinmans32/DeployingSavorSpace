@@ -35,7 +35,7 @@ export default function SettingsPage() {
   const handleLogout = async () => {
     try {
       // First, call your backend logout endpoint
-      const response = await fetch('http://localhost:8080/auth/logout/github', {
+      const response = await fetch('https://penguinman-backend-production.up.railway.app/auth/logout/github', {
         method: 'GET',
         credentials: 'include',
       });

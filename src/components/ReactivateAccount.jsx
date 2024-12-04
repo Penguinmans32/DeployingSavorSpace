@@ -29,7 +29,7 @@ const AccountReactivation = () => {
         setError('');
 
         try {
-            const response = await fetch('http://localhost:8080/auth/reactivate', {
+            const response = await fetch('https://penguinman-backend-production.up.railway.app/auth/reactivate', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

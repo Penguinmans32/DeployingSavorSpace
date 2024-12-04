@@ -29,7 +29,7 @@ const AdminManagePosts = () => {
         return;
       }
 
-      const response = await axios.get('http://localhost:8080/admin/ad', {
+      const response = await axios.get('https://penguinman-backend-production.up.railway.app/admin/ad', {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ const AdminManagePosts = () => {
       if(response.data.imageURL) {
         const profilePicURL = response.data.imageURL.startsWith('http')
             ? response.data.imageURL 
-            : `http://localhost:8080${response.data.imageURL}`;
+            : `https://penguinman-backend-production.up.railway.app${response.data.imageURL}`;
         setProfilePic(profilePicURL);
       } else {
         setProfilePic(defaultProfile);
@@ -58,7 +58,7 @@ const AdminManagePosts = () => {
         return;
       }
 
-      const response = await axios.get('http://localhost:8080/recipes', {
+      const response = await axios.get('https://penguinman-backend-production.up.railway.app/recipes', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -70,7 +70,7 @@ const AdminManagePosts = () => {
 
       setPosts(response.data.map(post => ({
         ...post,
-        imageUrl: post.imageURL ? `http://localhost:8080${post.imageURL}` : null,
+        imageUrl: post.imageURL ? `https://penguinman-backend-production.up.railway.app${post.imageURL}` : null,
         username: post.user?.username || 'Unknown User'
       })));
 
@@ -95,7 +95,7 @@ const AdminManagePosts = () => {
   const handleDeleteConfirm = async () => {
     try {
       const token = sessionStorage.getItem('adminToken');
-      await axios.delete(`http://localhost:8080/admin/recipes/${postToDelete.recipeID}`, {
+      await axios.delete(`https://penguinman-backend-production.up.railway.app/admin/recipes/${postToDelete.recipeID}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

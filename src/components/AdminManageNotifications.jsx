@@ -30,7 +30,7 @@ const AdminManageNotifications = () => {
         return;
       }
 
-      const response = await axios.get('http://localhost:8080/admin/ad', {
+      const response = await axios.get('https://penguinman-backend-production.up.railway.app/admin/ad', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -39,7 +39,7 @@ const AdminManageNotifications = () => {
       if(response.data.imageURL) {
         const profilePicURL = response.data.imageURL.startsWith('http')
             ? response.data.imageURL 
-            : `http://localhost:8080${response.data.imageURL}`;
+            : `https://penguinman-backend-production.up.railway.app${response.data.imageURL}`;
         setProfilePic(profilePicURL);
       } else {
         setProfilePic(defaultProfile);
@@ -82,7 +82,7 @@ const AdminManageNotifications = () => {
         return;
       }
 
-      const response = await axios.get('http://localhost:8080/admin/flagged-comments', {
+      const response = await axios.get('https://penguinman-backend-production.up.railway.app/admin/flagged-comments', {
         headers: {
           Authorization: `Bearer ${token}`,
         }
@@ -90,7 +90,7 @@ const AdminManageNotifications = () => {
 
       setFlaggedComments(response.data.map(comment => ({
         ...comment,
-        userImageUrl: comment.userImageURL ? `http://localhost:8080${comment.userImageURL}` : defaultProfile,
+        userImageUrl: comment.userImageURL ? `https://penguinman-backend-production.up.railway.app${comment.userImageURL}` : defaultProfile,
         username: comment.username || 'Unknown User'
       })));
     } catch (error) {
@@ -114,7 +114,7 @@ const AdminManageNotifications = () => {
   const handleDeleteConfirm = async () => {
     try {
       const token = sessionStorage.getItem('adminToken');
-      await axios.delete(`http://localhost:8080/admin/comments/${commentToDelete.commentID}`, {
+      await axios.delete(`https://penguinman-backend-production.up.railway.app/admin/comments/${commentToDelete.commentID}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

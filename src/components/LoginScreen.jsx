@@ -47,12 +47,12 @@ const Login = ({ onLogin }) => {
   }, [query, navigate]);
 
   const handleGoogleLogin = () => {
-    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+    window.location.href = 'https://penguinman-backend-production.up.railway.app/oauth2/authorization/google';
   };
 
   const handleGithubLogin = (e) => {
     e.preventDefault();
-    window.location.href = 'http://localhost:8080/oauth2/authorization/github';
+    window.location.href = 'https://penguinman-backend-production.up.railway.app/oauth2/authorization/github';
   };
 
   const handleReactivate = () => {

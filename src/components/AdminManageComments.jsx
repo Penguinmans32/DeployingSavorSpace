@@ -29,7 +29,7 @@ const AdminManageComments = () => {
         return;
       }
 
-      const response = await axios.get('http://localhost:8080/admin/ad', {
+      const response = await axios.get('https://penguinman-backend-production.up.railway.app/admin/ad', {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ const AdminManageComments = () => {
       if(response.data.imageURL) {
         const profilePicURL = response.data.imageURL.startsWith('http')
             ? response.data.imageURL 
-            : `http://localhost:8080${response.data.imageURL}`;
+            : `https://penguinman-backend-production.up.railway.app${response.data.imageURL}`;
         setProfilePic(profilePicURL);
       } else {
         setProfilePic(defaultProfile);
@@ -83,7 +83,7 @@ const AdminManageComments = () => {
       }
 
       // Get all recipes first
-      const recipesResponse = await axios.get('http://localhost:8080/recipes', {
+      const recipesResponse = await axios.get('https://penguinman-backend-production.up.railway.app/recipes', {
         headers: {
           Authorization: `Bearer ${token}`,
         }
@@ -92,7 +92,7 @@ const AdminManageComments = () => {
       // Fetch comments for each recipe
       const allComments = [];
       for (const recipe of recipesResponse.data) {
-        const commentsResponse = await axios.get(`http://localhost:8080/api/comments/recipe/${recipe.recipeID}`, {
+        const commentsResponse = await axios.get(`https://penguinman-backend-production.up.railway.app/api/comments/recipe/${recipe.recipeID}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           }
@@ -102,7 +102,7 @@ const AdminManageComments = () => {
 
       setComments(allComments.map(comment => ({
         ...comment,
-        userImageUrl: comment.userImageURL ? `http://localhost:8080${comment.userImageURL}` : defaultProfile,
+        userImageUrl: comment.userImageURL ? `https://penguinman-backend-production.up.railway.app${comment.userImageURL}` : defaultProfile,
         username: comment.user?.username || comment.username || 'Unknown User' // Use username from User entity
       })));
 
@@ -127,7 +127,7 @@ const AdminManageComments = () => {
   const handleDeleteConfirm = async () => {
     try {
       const token = sessionStorage.getItem('adminToken');
-      await axios.delete(`http://localhost:8080/admin/comments/${commentToDelete.commentID}`, {
+      await axios.delete(`https://penguinman-backend-production.up.railway.app/admin/comments/${commentToDelete.commentID}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

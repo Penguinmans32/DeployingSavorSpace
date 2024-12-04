@@ -19,7 +19,7 @@ export default function RecipeDetail() {
   const [currentUser, setCurrentUser] = useState(null);
   const [newComment, setNewComment] = useState('');
   const [isLoading, setIsLoading] = useState(false)
-  const BACKEND_URL = 'http://localhost:8080';
+  const BACKEND_URL = 'https://penguinman-backend-production.up.railway.app';
 
   const getLikesFromStorage = () => {
     try {
@@ -52,7 +52,7 @@ export default function RecipeDetail() {
   const fetchCurrentUser = async () => {
     try {
         const token = localStorage.getItem('authToken');
-        const response = await fetch('http://localhost:8080/users/me', {
+        const response = await fetch('https://penguinman-backend-production.up.railway.app/users/me', {
             headers: {
                 'Authorization': `Bearer ${token}`,
             }
@@ -78,7 +78,7 @@ const fetchComments = async () => {
       console.log('Fetching comments for recipe:', recipeId);
       console.log('Using token:', token ? 'Token present' : 'No token');
 
-      const response = await fetch(`http://localhost:8080/api/comments/recipe/${recipeId}`, {
+      const response = await fetch(`https://penguinman-backend-production.up.railway.app/api/comments/recipe/${recipeId}`, {
           method: 'GET',
           headers: {
               'Authorization': `Bearer ${token}`,
@@ -134,14 +134,14 @@ useEffect(() => {
     if(!imageURL) return '';
     return imageURL.startsWith('http')
       ? imageURL
-      : `http://localhost:8080${imageURL}`;
+      : `https://penguinman-backend-production.up.railway.app${imageURL}`;
   };
 
   useEffect(() => {
     const fetchRecipeDetails = async () => {
       try {
         const token = localStorage.getItem('authToken');
-        const response = await fetch(`http://localhost:8080/recipes/${recipeId}`, {
+        const response = await fetch(`https://penguinman-backend-production.up.railway.app/recipes/${recipeId}`, {
           headers: {
             'Authorization': `Bearer ${token}`,
             'Accept': 'application/json'
@@ -158,7 +158,7 @@ useEffect(() => {
         
         // Fetch related recipes
         const relatedResponse = await fetch(
-          `http://localhost:8080/recipes/related/${recipeId}?limit=3`,
+          `https://penguinman-backend-production.up.railway.app/recipes/related/${recipeId}?limit=3`,
           { headers: { 'Authorization': `Bearer ${token}` }}
         );
         if (relatedResponse.ok) {
@@ -179,7 +179,7 @@ useEffect(() => {
     const fetchRating = async () => {
       try {
         const token = localStorage.getItem('authToken');
-        const response = await fetch(`http://localhost:8080/api/ratings/recipe/${recipeId}`, {
+        const response = await fetch(`https://penguinman-backend-production.up.railway.app/api/ratings/recipe/${recipeId}`, {
           headers: {
             'Authorization': `Bearer ${token}`,
           }
@@ -202,7 +202,7 @@ useEffect(() => {
     const fetchComments = async () => {
       try {
         const token = localStorage.getItem('authToken');
-        const response = await fetch(`http://localhost:8080/api/comments/recipe/${recipeId}`, {
+        const response = await fetch(`https://penguinman-backend-production.up.railway.app/api/comments/recipe/${recipeId}`, {
           headers: {
             'Authorization': `Bearer ${token}`,
           }
@@ -280,7 +280,7 @@ useEffect(() => {
         
         console.log('Sending comment data:', commentData);
 
-        const response = await fetch(`http://localhost:8080/api/comments/recipe/${recipeId}`, {
+        const response = await fetch(`https://penguinman-backend-production.up.railway.app/api/comments/recipe/${recipeId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -315,7 +315,7 @@ const handleDeleteComment = async (commentId) => {
 
   if (window.confirm('Are you sure you want to delete this comment?')) {
       try {
-          const response = await fetch(`http://localhost:8080/api/comments/${commentId}`, {
+          const response = await fetch(`https://penguinman-backend-production.up.railway.app/api/comments/${commentId}`, {
               method: 'DELETE',
               headers: {
                   'Authorization': `Bearer ${token}`,

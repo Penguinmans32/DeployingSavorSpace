@@ -298,7 +298,7 @@ const LandingPage = () => {
   e.preventDefault();
   setIsSubmitting(true);
   try {
-    await axios.post('http://localhost:8080/auth/email', formData);
+    await axios.post('https://penguinman-backend-production.up.railway.app/auth/email', formData);
     setShowToast({
       show: true,
       type: "success",

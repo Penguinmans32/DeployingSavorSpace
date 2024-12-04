@@ -33,7 +33,7 @@ const NotificationComponent = ({ username }) => {
     useEffect(() => {
         const fetchNotifications = async () => {
             try {
-                const response = await fetch('http://localhost:8080/api/notifications', {
+                const response = await fetch('https://penguinman-backend-production.up.railway.app/api/notifications', {
                     headers: {
                         'Authorization': `Bearer ${localStorage.getItem('authToken')}`
                     }
@@ -65,7 +65,7 @@ const NotificationComponent = ({ username }) => {
 
     const markAsRead = async (notificationId) => {
         try {
-            await fetch(`http://localhost:8080/api/notifications/${notificationId}/read`, {
+            await fetch(`https://penguinman-backend-production.up.railway.app/api/notifications/${notificationId}/read`, {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('authToken')}`

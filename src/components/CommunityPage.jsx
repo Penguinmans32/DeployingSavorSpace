@@ -15,7 +15,7 @@ import '../styles/PostingPage.css';
 import { getImagePath } from '../utils/imageUtils';
 
 
-const BACKEND_URL = 'http://localhost:8080';
+const BACKEND_URL = 'https://penguinman-backend-production.up.railway.app';
 
 const PostingPage = () => {
   const navigate = useNavigate();
@@ -51,7 +51,7 @@ const PostingPage = () => {
               throw new Error('No authentication token found');
           }
 
-          const response = await fetch('http://localhost:8080/recipes', {
+          const response = await fetch('https://penguinman-backend-production.up.railway.app/recipes', {
               headers: {
                   'Authorization': `Bearer ${token}`,
                   'Accept': 'application/json'
@@ -110,7 +110,7 @@ const PostingPage = () => {
             }
         });
 
-        const response = await fetch('http://localhost:8080/recipes', {
+        const response = await fetch('https://penguinman-backend-production.up.railway.app/recipes', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -162,12 +162,12 @@ const RecipeComments = ({ recipeId, isVisible}) => {
       const cleanPath = cleanImagePath(imageURL);
       return cleanPath.startsWith('http')
           ? cleanPath
-          : `http://localhost:8080${cleanPath}`;
+          : `https://penguinman-backend-production.up.railway.app${cleanPath}`;
   };
 
     const fetchCurrentUser = async () => {
         try {
-            const response = await fetch('http://localhost:8080/users/me', {
+            const response = await fetch('https://penguinman-backend-production.up.railway.app/users/me', {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                 }
@@ -192,7 +192,7 @@ const RecipeComments = ({ recipeId, isVisible}) => {
           console.log('Fetching comments for recipe:', recipeId);
           console.log('Using token:', token ? 'Token present' : 'No token');
   
-          const response = await fetch(`http://localhost:8080/api/comments/recipe/${recipeId}`, {
+          const response = await fetch(`https://penguinman-backend-production.up.railway.app/api/comments/recipe/${recipeId}`, {
               method: 'GET',
               headers: {
                   'Authorization': `Bearer ${token}`,
@@ -273,7 +273,7 @@ const RecipeComments = ({ recipeId, isVisible}) => {
             
             console.log('Sending comment data:', commentData);
     
-            const response = await fetch(`http://localhost:8080/api/comments/recipe/${recipeId}`, {
+            const response = await fetch(`https://penguinman-backend-production.up.railway.app/api/comments/recipe/${recipeId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -329,7 +329,7 @@ const RecipeComments = ({ recipeId, isVisible}) => {
 
 const confirmDeleteComment = async () => {
   try {
-      const response = await fetch(`http://localhost:8080/api/comments/${commentToDelete}`, {
+      const response = await fetch(`https://penguinman-backend-production.up.railway.app/api/comments/${commentToDelete}`, {
           method: 'DELETE',
           headers: {
               'Authorization': `Bearer ${token}`,
@@ -408,7 +408,7 @@ const confirmDeleteComment = async () => {
     }
 
     try {
-        const response = await fetch(`http://localhost:8080/api/comments/${commentId}/flag`, {
+        const response = await fetch(`https://penguinman-backend-production.up.railway.app/api/comments/${commentId}/flag`, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -634,7 +634,7 @@ const StarRating = ({ rating, onRatingChange, totalRatings = 0, onToggleComments
       if (!token || isLoading === false) return;
 
       try {
-          const response = await fetch('http://localhost:8080/users/me', {
+          const response = await fetch('https://penguinman-backend-production.up.railway.app/users/me', {
               headers: {
                   'Authorization': `Bearer ${token}`,
               }
@@ -675,7 +675,7 @@ const StarRating = ({ rating, onRatingChange, totalRatings = 0, onToggleComments
       if(!token) return;
         try {
             const response = await fetch(
-                `http://localhost:8080/api/ratings/recipe/${recipe.recipeID}`,
+                `https://penguinman-backend-production.up.railway.app/api/ratings/recipe/${recipe.recipeID}`,
             {
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -714,7 +714,7 @@ const StarRating = ({ rating, onRatingChange, totalRatings = 0, onToggleComments
               rating: newRating
           }).toString();
 
-          const response = await fetch(`http://localhost:8080/api/ratings/rate?${params}`, {
+          const response = await fetch(`https://penguinman-backend-production.up.railway.app/api/ratings/rate?${params}`, {
               method: 'POST',
               headers: {
                   'Authorization': `Bearer ${token}`,
@@ -770,7 +770,7 @@ const StarRating = ({ rating, onRatingChange, totalRatings = 0, onToggleComments
     // Get full URL for recipe image
     const imageURL = recipe.imageURL?.startsWith('http')
         ? recipe.imageURL
-        : `http://localhost:8080${recipe.imageURL}`;
+        : `https://penguinman-backend-production.up.railway.app${recipe.imageURL}`;
 
     // Get URL for any image including profile pics
     const getImageURL = (imageURL) => {
@@ -779,7 +779,7 @@ const StarRating = ({ rating, onRatingChange, totalRatings = 0, onToggleComments
         const cleanPath = cleanImagePath(imageURL);
         return cleanPath.startsWith('http')
             ? cleanPath
-            : `http://localhost:8080${cleanPath}`;
+            : `https://penguinman-backend-production.up.railway.app${cleanPath}`;
     };
 
     const formDate = (dateString) => {
@@ -834,7 +834,7 @@ const StarRating = ({ rating, onRatingChange, totalRatings = 0, onToggleComments
       }
   
       try {
-          const response = await fetch(`http://localhost:8080/recipes/${recipe.recipeID}`, {
+          const response = await fetch(`https://penguinman-backend-production.up.railway.app/recipes/${recipe.recipeID}`, {
               method: 'PUT',
               headers: {
                   'Authorization': `Bearer ${token}`,
@@ -886,7 +886,7 @@ const StarRating = ({ rating, onRatingChange, totalRatings = 0, onToggleComments
 
   const confirmDelete = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/recipes/${recipe.recipeID}`, {
+      const response = await fetch(`https://penguinman-backend-production.up.railway.app/recipes/${recipe.recipeID}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`

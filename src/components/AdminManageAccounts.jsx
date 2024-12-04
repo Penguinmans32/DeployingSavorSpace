@@ -34,7 +34,7 @@ const AdminManageAccounts = () => {
       }
       console.log('Admin token:', token);
   
-      const response = await axios.get('http://localhost:8080/admin/ad', {
+      const response = await axios.get('https://penguinman-backend-production.up.railway.app/admin/ad', {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -46,7 +46,7 @@ const AdminManageAccounts = () => {
       if(response.data.imageURL) {
         const profilePicURL = response.data.imageURL.startsWith('http')
             ? data.imageURL 
-            : `http://localhost:8080${response.data.imageURL}`;
+            : `https://penguinman-backend-production.up.railway.app${response.data.imageURL}`;
         setProfilePic(profilePicURL);
       }else {
         setProfilePic(defaultProfile);
@@ -70,13 +70,13 @@ const AdminManageAccounts = () => {
         return;
       }
   
-      const activeResponse = await axios.get('http://localhost:8080/admin/users', {
+      const activeResponse = await axios.get('https://penguinman-backend-production.up.railway.app/admin/users', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      const deleteResponse = await axios.get('http://localhost:8080/admin/users/deleted', {
+      const deleteResponse = await axios.get('https://penguinman-backend-production.up.railway.app/admin/users/deleted', {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -89,7 +89,7 @@ const AdminManageAccounts = () => {
           profilePicURL: user.imageURL
             ? user.imageURL.startsWith('http')
               ? user.imageURL
-              : `http://localhost:8080${user.imageURL}`
+              : `https://penguinman-backend-production.up.railway.app${user.imageURL}`
             : defaultProfile,
         }));
         setUsers(activeUserList);
@@ -102,7 +102,7 @@ const AdminManageAccounts = () => {
           profilePicURL: user.imageURL
             ? user.imageURL.startsWith('http')
               ? user.imageURL
-              : `http://localhost:8080${user.imageURL}`
+              : `https://penguinman-backend-production.up.railway.app${user.imageURL}`
             : defaultProfile,
         }));
         setDeletedUsers(deleteUserList);
@@ -134,7 +134,7 @@ const AdminManageAccounts = () => {
   const handleDeleteConfirm = async () => {
     try {
       const token = sessionStorage.getItem('adminToken');
-      await axios.delete(`http://localhost:8080/admin/users/${userToDelete.id}`, {
+      await axios.delete(`https://penguinman-backend-production.up.railway.app/admin/users/${userToDelete.id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -152,7 +152,7 @@ const AdminManageAccounts = () => {
   const handleRestore = async (userId) => {
     try {
       const token = sessionStorage.getItem('adminToken');
-      await axios.put(`http://localhost:8080/admin/users/${userId}/restore`, {}, {
+      await axios.put(`https://penguinman-backend-production.up.railway.app/admin/users/${userId}/restore`, {}, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -169,7 +169,7 @@ const AdminManageAccounts = () => {
     e.preventDefault();
     try {
       const token = sessionStorage.getItem('adminToken');
-      await axios.put(`http://localhost:8080/admin/users/${editUser.id}`, editUser, {
+      await axios.put(`https://penguinman-backend-production.up.railway.app/admin/users/${editUser.id}`, editUser, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

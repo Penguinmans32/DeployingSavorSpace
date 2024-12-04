@@ -87,7 +87,7 @@ const Register = () => {
   };
 
   const handleGoogleLogin = () => {
-    window.location.href = 'http://localhost:8080/oauth2/authorization/google';
+    window.location.href = 'https://penguinman-backend-production.up.railway.app/oauth2/authorization/google';
   };
 
   const validtePassword = (password) => {
@@ -101,7 +101,7 @@ const Register = () => {
 
   const handleGithubLogin = (e) => {
     e.preventDefault();
-    window.location.href = 'http://localhost:8080/oauth2/authorization/github';
+    window.location.href = 'https://penguinman-backend-production.up.railway.app/oauth2/authorization/github';
   };
 
   const handleFileChange = (e) => {

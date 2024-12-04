@@ -92,7 +92,7 @@ const EditProfileSettings = () => {
         if (!token) return;
 
         try {
-            const response = await fetch('http://localhost:8080/users/me', {
+            const response = await fetch('https://penguinman-backend-production.up.railway.app/users/me', {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
@@ -109,7 +109,7 @@ const EditProfileSettings = () => {
             if(data.imageURL) {
                 const profilePicUrl = data.imageURL?.startsWith('http')
                     ? data.imageURL
-                    : `http://localhost:8080${data.imageURL}`;
+                    : `https://penguinman-backend-production.up.railway.app${data.imageURL}`;
                 setProfilePic(profilePicUrl);
             }else {
                 setProfilePic(null);
@@ -165,7 +165,7 @@ const EditProfileSettings = () => {
                 if (!validatePasswords()) {
                     return;
                 }
-                const passwordResponse = await fetch('http://localhost:8080/users/change-password', {
+                const passwordResponse = await fetch('https://penguinman-backend-production.up.railway.app/users/change-password', {
                     method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -192,7 +192,7 @@ const EditProfileSettings = () => {
             }
 
             // Handle profile update
-            const meResponse = await fetch('http://localhost:8080/users/me', {
+            const meResponse = await fetch('https://penguinman-backend-production.up.railway.app/users/me', {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
@@ -216,7 +216,7 @@ const EditProfileSettings = () => {
                 formDataToSend.append('profilePic', selectedFile);
             }
 
-            const response = await fetch(`http://localhost:8080/users/${userData.id}`, {
+            const response = await fetch(`https://penguinman-backend-production.up.railway.app/users/${userData.id}`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -234,7 +234,7 @@ const EditProfileSettings = () => {
 
             const newProfilePicUrl = updatedData.imageURL?.startsWith('https')
                 ? updatedData.imageURL
-                : `http://localhost:8080${updatedData.imageURL}`;
+                : `https://penguinman-backend-production.up.railway.app${updatedData.imageURL}`;
             setProfilePic(newProfilePicUrl);
 
             setSelectedFile(null);

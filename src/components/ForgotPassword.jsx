@@ -37,7 +37,7 @@ const ForgotPasswordForm = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:8080/auth/forgot-password', {
+      const response = await axios.post('https://penguinman-backend-production.up.railway.app/auth/forgot-password', {
         email: email,
         newPassword: newPassword
       });

@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const ADMIN_API_URL = 'http://localhost:8080/auth';
+const ADMIN_API_URL = 'https://penguinman-backend-production.up.railway.app/auth';
 
 const adminApi = axios.create({
   baseURL: ADMIN_API_URL,

@@ -35,7 +35,7 @@ export default function RecipePage() {
     if(!imageURL) return '';
     return imageURL.startsWith('http')
       ? imageURL
-      : `http://localhost:8080${imageURL}`;
+      : `https://penguinman-backend-production.up.railway.app${imageURL}`;
   };
 
   const handleSearch = async (e) => {
@@ -100,7 +100,7 @@ export default function RecipePage() {
         navigate('/login')
       }
 
-      const response = await fetch(`http://localhost:8080/recipes?page=${page}&size=${size}`, {
+      const response = await fetch(`https://penguinman-backend-production.up.railway.app/recipes?page=${page}&size=${size}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Accept': 'application/json'
