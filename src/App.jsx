@@ -179,7 +179,7 @@ const App = () => {
       return;
     }
     try {
-      const response = await fetch('http://localhost:8080/users/me', {
+      const response = await fetch('https://penguinman-backend-production.up.railway.app/users/me', {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -197,7 +197,7 @@ const App = () => {
       if(data.imageURL) {
         const profilePicURL = data.imageURL.startsWith('http')
           ? data.imageURL
-          : `http://localhost:8080${data.imageURL}`;
+          : `https://penguinman-backend-production.up.railway.app${data.imageURL}`;
         setProfilePic(profilePicURL);
       }else {
         setProfilePic(null);
@@ -219,7 +219,7 @@ const App = () => {
     localStorage.removeItem('authToken');
     localStorage.removeItem('refreshToken');
     try {
-      await fetch('http://localhost:8080/auth/logout/github', {
+      await fetch('https://penguinman-backend-production.up.railway.app/auth/logout/github', {
         method: 'GET',
         credentials: 'include',
       });
