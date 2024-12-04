@@ -15,6 +15,7 @@ const useQuery = () => {
 
 const login = async (loginData) => {
   const response = await api.post('/auth/login', loginData);
+  console.log('Login Response:', response); // Debug line
   localStorage.setItem('authToken', response.data.token);
   localStorage.setItem('refreshToken', response.data.refreshToken);
   return response;
