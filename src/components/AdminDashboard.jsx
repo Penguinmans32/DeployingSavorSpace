@@ -344,7 +344,7 @@ const AdminDashboard = () => {
       if(response.data.imageURL) {
         const profilePicURL = response.data.imageURL.startsWith('http')
             ? response.data.imageURL 
-            : `http://localhost:8080${response.data.imageURL}`;
+            : `https://penguinman-backend-production.up.railway.app${response.data.imageURL}`;
         setProfilePic(profilePicURL);
       }else {
         setProfilePic(defaultProfile);
