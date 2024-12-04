@@ -47,13 +47,14 @@ const Login = ({ onLogin }) => {
     }
   }, [query, navigate]);
 
-  const handleGoogleLogin = () => {
-    window.location.href = 'https://penguinman-backend-production.up.railway.app/oauth2/authorization/google';
+  const handleGoogleLogin = (e) => {
+    e.preventDefault();
+    window.open('https://penguinman-backend-production.up.railway.app/oauth2/authorization/google', '_self');
   };
 
   const handleGithubLogin = (e) => {
     e.preventDefault();
-    window.location.href = 'https://penguinman-backend-production.up.railway.app/oauth2/authorization/github';
+    window.open('https://penguinman-backend-production.up.railway.app/oauth2/authorization/github', '_self');
   };
 
   const handleReactivate = () => {
