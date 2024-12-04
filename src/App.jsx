@@ -240,7 +240,6 @@ const App = () => {
   };
 
   return (
-    <Router>
       <div>
         <Navbar profilePic={profilePic} username={username} isAuthenticated={isAuthenticated} handleLogout={handleLogout} />
         <Routes>
@@ -276,7 +275,6 @@ const App = () => {
           <Route path="/community/:recipeId" element={<PostingPage />} />
         </Routes>
       </div>
-    </Router>
   );
 };
 
