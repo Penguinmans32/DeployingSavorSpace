@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useState } from 'react';
-import { Link, Route, HashRouter as Router, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Route, BrowserRouter as Router, Routes, useLocation, useNavigate } from 'react-router-dom';
 import AboutUs from './components/AboutUs';
 import AccountSettings from './components/AccountSettings';
 import AdminDashboard from './components/AdminDashboard';
@@ -172,6 +172,32 @@ const App = () => {
   const [username, setUsername] = useState('');
   const [role, setRole] = useState('');
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleAuthTokens = useCallback(() => {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token');
+    const refreshToken = params.get('refreshToken');
+
+    if (token && refreshToken) {
+      // Store tokens
+      localStorage.setItem('authToken', token);
+      localStorage.setItem('refreshToken', refreshToken);
+      
+      // Clean up URL
+      window.history.replaceState({}, document.title, '/homepage');
+      
+      // Set authenticated state
+      setIsAuthenticated(true);
+      
+      // Fetch user profile
+      fetchProfilePic();
+    }
+  }, []);
+  
+  useEffect(() => {
+    handleAuthTokens();
+  }, [handleAuthTokens]);
 
   const fetchProfilePic = async () => {
     const token = localStorage.getItem('authToken');

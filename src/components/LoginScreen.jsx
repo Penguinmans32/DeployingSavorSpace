@@ -47,18 +47,40 @@ const Login = ({ onLogin }) => {
     }
   }, [query, navigate]);
 
-  const handleGoogleLogin = () => {
-    window.location.href = 'https://penguinman-backend-production.up.railway.app/oauth2/authorization/google';
-  };
+  const handleGoogleLogin = (e) => {
+    e.preventDefault();
+    const baseUrl = 'https://penguinman-backend-production.up.railway.app';
+    const googleAuthUrl = `${baseUrl}/oauth2/authorization/google`;
+    window.location.replace(googleAuthUrl);
+};
 
   const handleGithubLogin = (e) => {
-    e.preventDefault();
-    window.location.href = 'https://penguinman-backend-production.up.railway.app/oauth2/authorization/github';
+      e.preventDefault();
+      const githubAuthUrl = 'https://penguinman-backend-production.up.railway.app/oauth2/authorization/github';
+      window.location.replace(githubAuthUrl);
   };
 
   const handleReactivate = () => {
     navigate('/reactivate-account');
   }
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token');
+    const refreshToken = params.get('refreshToken');
+
+    if (token && refreshToken) {
+        // Store tokens
+        localStorage.setItem('authToken', token);
+        localStorage.setItem('refreshToken', refreshToken);
+        
+        // Clear URL parameters
+        window.history.replaceState({}, document.title, window.location.pathname);
+        
+        // Navigate to homepage
+        navigate('/homepage');
+    }
+}, [navigate]);
 
 
   const validate = () => {
@@ -185,17 +207,6 @@ const Login = ({ onLogin }) => {
           </div>
         <div className="login-options">
           <span>Don&apos;t have an account? <Link to="/register" className="register">Register</Link></span>
-          <p>Or login with</p>
-          <div className="social-options">
-            <button onClick={handleGoogleLogin} className="google-btn">
-              <FcGoogle />
-              <span>Google</span>
-            </button>
-            <button onClick={handleGithubLogin} className="github-btn">
-              <IoLogoGithub />
-              <span>Github</span> 
-            </button>
-          </div>
           <div className="reactivate">
             <span>Deactivated Account? Activate it here!</span>
             <button onClick={handleReactivate} className="reactivate-btn">

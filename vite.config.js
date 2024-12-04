@@ -4,6 +4,9 @@ import { defineConfig } from 'vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  server: {
+    historyApiFallbac: true,
+  },
   base: '/',
   resolve: {
     alias: {
@@ -17,5 +20,5 @@ export default defineConfig({
         manualChunks: undefined
       }
     }
-  }
+  },
 })
