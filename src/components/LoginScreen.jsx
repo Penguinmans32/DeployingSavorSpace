@@ -51,9 +51,6 @@ const Login = ({ onLogin }) => {
     e.preventDefault();
     const baseUrl = 'https://penguinman-backend-production.up.railway.app';
     const googleAuthUrl = `${baseUrl}/oauth2/authorization/google`;
-    
-    localStorage.setItem('preLoginPath', window.location.pathname);
-    
     window.location.replace(googleAuthUrl);
 };
 
