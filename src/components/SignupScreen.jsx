@@ -14,11 +14,12 @@ const useQuery = () => {
 };
 
 const register = async (formData) => {
-  const response = await api.post(`/signup`, formData, {
+  const response = await api.post(`/auth/signup`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
   });
+  console.log('Login Response:', response); // Debug line
   return response.data; 
 };
 
