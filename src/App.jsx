@@ -172,6 +172,47 @@ const App = () => {
   const [username, setUsername] = useState('');
   const [role, setRole] = useState('');
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleOAuthCallback = useCallback(() => {
+    const url = window.location.href;
+    
+    // Check if this is an OAuth callback
+    if (url.includes('token=') && url.includes('refreshToken=')) {
+      try {
+        // Extract tokens using regex
+        const tokenMatch = url.match(/token=([^&~]+)/);
+        const refreshTokenMatch = url.match(/refreshToken=([^&~]+)/);
+
+        if (tokenMatch && refreshTokenMatch) {
+          const token = tokenMatch[1];
+          const refreshToken = refreshTokenMatch[1];
+
+          // Store tokens
+          localStorage.setItem('authToken', token);
+          localStorage.setItem('refreshToken', refreshToken);
+
+          // Clean up URL
+          window.history.replaceState({}, document.title, '/homepage');
+          
+          // Set authenticated state
+          setIsAuthenticated(true);
+          
+          // Navigate to homepage
+          navigate('/homepage');
+          
+          // Fetch user profile
+          fetchProfilePic();
+        }
+      } catch (error) {
+        console.error('Error handling OAuth callback:', error);
+      }
+    }
+  }, [navigate]); // Add dependencies
+
+  useEffect(() => {
+    handleOAuthCallback();
+  }, [handleOAuthCallback, location]); // Add location as dependency
 
   const fetchProfilePic = async () => {
     const token = localStorage.getItem('authToken');
