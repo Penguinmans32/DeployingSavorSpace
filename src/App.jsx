@@ -174,57 +174,30 @@ const App = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleOAuthCallback = useCallback(() => {
-    const url = window.location.href;
-    
-    // Check if this is an OAuth callback
-    if (url.includes('token=') || url.includes('code=')) {
-      try {
-        // First try URLSearchParams
-        const params = new URLSearchParams(window.location.search);
-        let token = params.get('token');
-        let refreshToken = params.get('refreshToken');
-  
-        // If not found, try parsing from URL with custom delimiter
-        if (!token || !refreshToken) {
-          const segments = url.split('~and~');
-          for (const segment of segments) {
-            if (segment.includes('token=')) {
-              token = segment.split('token=')[1];
-            }
-            if (segment.includes('refreshToken=')) {
-              refreshToken = segment.split('refreshToken=')[1];
-            }
-          }
-        }
-  
-        // Clean up tokens if needed
-        token = token?.replace(/[^A-Za-z0-9._-]/g, '');
-        refreshToken = refreshToken?.replace(/[^A-Za-z0-9._-]/g, '');
-  
-        if (token && refreshToken) {
-          // Store tokens
-          localStorage.setItem('authToken', token);
-          localStorage.setItem('refreshToken', refreshToken);
-          setIsAuthenticated(true);
-          
-          // Redirect to home or intended path
-          const intendedPath = localStorage.getItem('preLoginPath') || '/homepage';
-          navigate(intendedPath);
-        } else {
-          console.error('Invalid tokens received');
-          navigate('/login');
-        }
-      } catch (error) {
-        console.error('Error processing OAuth callback:', error);
-        navigate('/login');
-      }
+  const handleAuthTokens = useCallback(() => {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token');
+    const refreshToken = params.get('refreshToken');
+
+    if (token && refreshToken) {
+      // Store tokens
+      localStorage.setItem('authToken', token);
+      localStorage.setItem('refreshToken', refreshToken);
+      
+      // Clean up URL
+      window.history.replaceState({}, document.title, '/homepage');
+      
+      // Set authenticated state
+      setIsAuthenticated(true);
+      
+      // Fetch user profile
+      fetchProfilePic();
     }
-  }, [navigate]);
+  }, []);
   
   useEffect(() => {
-    handleOAuthCallback();
-  }, [handleOAuthCallback]);
+    handleAuthTokens();
+  }, [handleAuthTokens]);
 
   const fetchProfilePic = async () => {
     const token = localStorage.getItem('authToken');
