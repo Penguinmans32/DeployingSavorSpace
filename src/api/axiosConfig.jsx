@@ -1,14 +1,30 @@
 import axios from 'axios';
 
-const API_URL = 'https://penguinman-backend-production.up.railway.app/auth';
+const API_URL = 'https://penguinman-backend-production.up.railway.app';
 
 const api = axios.create({
   baseURL: API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true,
+  withCredentials: false,
 });
+
+api.interceptors.request.use(
+  (config) => {
+    console.log('Request:', {
+      url: config.url,
+      method: config.method,
+      headers: config.headers,
+      data: config.data
+    });
+    return config;
+  },
+  (error) => {
+    console.error('Request Error:', error);
+    return Promise.reject(error);
+  }
+);
 
 api.interceptors.request.use(
   (config) => {

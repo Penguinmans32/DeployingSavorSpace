@@ -14,7 +14,7 @@ const useQuery = () => {
 };
 
 const login = async (loginData) => {
-  const response = await api.post('/login', loginData);
+  const response = await api.post('/auth/login', loginData);
   localStorage.setItem('authToken', response.data.token);
   localStorage.setItem('refreshToken', response.data.refreshToken);
   return response;
@@ -58,6 +58,7 @@ const Login = ({ onLogin }) => {
   const handleReactivate = () => {
     navigate('/reactivate-account');
   }
+
 
   const validate = () => {
     const errors = {};
