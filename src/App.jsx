@@ -217,21 +217,39 @@ const App = () => {
   }, []);
 
   const handleLogout = async () => {
-    localStorage.removeItem('authToken');
-    localStorage.removeItem('refreshToken');
-    try {
-      await fetch('https://penguinman-backend-production.up.railway.app/auth/logout/github', {
-        method: 'GET',
-        credentials: 'include',
-      });
-    }catch (error) {
-      console.error('Error logging out:', error);
-    }
+    // First clear all tokens and state
+    localStorage.clear(); // Clear all localStorage items at once
+    
+    // Reset all states first
     setProfilePic(null);
     setUsername('');
     setRole('');
     setIsAuthenticated(false);
-    navigate('/login', { replace: true });
+  
+    try {
+      // Perform logout request
+      const response = await fetch('https://penguinman-backend-production.up.railway.app/auth/logout/github', {
+        method: 'GET',
+        credentials: 'include',
+      });
+  
+      if (response.ok) {
+        // Use window.history to clean up the URL before navigation
+        window.history.replaceState({}, '', '/login');
+        navigate('/login', { 
+          replace: true,
+          state: {} // Ensure clean state
+        });
+      }
+    } catch (error) {
+      console.error('Error logging out:', error);
+      // Even if logout fails, redirect to login
+      window.history.replaceState({}, '', '/login');
+      navigate('/login', { 
+        replace: true,
+        state: {}
+      });
+    }
   };
 
   const handleLogin = () => {
