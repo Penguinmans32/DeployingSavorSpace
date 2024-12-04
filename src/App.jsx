@@ -174,53 +174,78 @@ const App = () => {
   const navigate = useNavigate();
   const BASE_URL = 'https://penguinman-backend-production.up.railway.app';
 
+  const getImageURL = async (imagePath) => {
+    try {
+      if (!imagePath) {
+        return '/images/defaultProfiles.png';
+      }
+  
+      if (imagePath.startsWith('http')) {
+        return imagePath;
+      }
+  
+      if (imagePath.startsWith('/uploads/')) {
+        const response = await fetch(`${BASE_URL}${imagePath}`);
+        
+        // Check if response is ok
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        // Validate Content-Type
+        const contentType = response.headers.get('content-type');
+        if (!contentType || !contentType.includes('application/json')) {
+          throw new TypeError("Expected JSON response but got " + contentType);
+        }
+  
+        // Carefully parse JSON
+        const data = await response.text();
+        try {
+          return JSON.parse(data);
+        } catch (e) {
+          console.error('JSON Parse Error:', e);
+          console.log('Raw response:', data);
+          throw new Error('Invalid JSON response from server');
+        }
+      }
+    } catch (error) {
+      console.error('Error in getImageURL:', error);
+      return '/images/defaultProfiles.png'; // Fallback image
+    }
+  }
+
 const fetchProfilePic = async () => {
   const token = localStorage.getItem('authToken');
   if (!token) {
     setIsAuthenticated(false);
     return;
   }
-
   try {
-    // Use your axios instance instead of fetch
-    const response = await api.get('/users/me');
-    
-    // Extract only the fields we need based on your UserDTO
-    const userData = {
-      id: response.data.id,
-      username: response.data.username,
-      imageURL: response.data.imageURL,
-      email: response.data.email,
-      fullName: response.data.fullName,
-      role: response.data.role // if you need it
-    };
+    const response = await fetch(`${BASE_URL}/users/me`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      }
+    });
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json();
 
-    // Update state with the sanitized data
-    setUsername(userData.fullName || userData.username || '');
-    setRole(userData.role || 'USER'); // default to USER if not provided
+    setUsername(data.fullName);
+    setRole(data.role);
     setIsAuthenticated(true);
     
-    console.log('Raw imageURL from backend:', userData.imageURL); 
-    const profilePicURL = getImageURL(userData.imageURL);
+    console.log('Raw imageURL from backend:', data.imageURL); 
+    const profilePicURL = getImageURL(data.imageURL);
     console.log('Processed profile picture URL:', profilePicURL);
     setProfilePic(profilePicURL);
 
-    console.log('User data:', userData);
+    console.log('User data: ', data);
   } catch (error) {
     console.error('Error fetching profile picture:', error);
     setIsAuthenticated(false);
-    setProfilePic(null);
-    setUsername('');
-    setRole('');
   }
-};
-
-// Update your getImageURL function
-const getImageURL = (imageURL) => {
-  if (!imageURL) return getImagePath("defaultProfiles.png");
-  if (imageURL.startsWith('http')) return imageURL;
-  if (imageURL.startsWith('/uploads/')) return `${BASE_URL}${imageURL}`;
-  return `${BASE_URL}/${imageURL.replace(/^\//, '')}`;
 };
 
   useEffect(() => {
