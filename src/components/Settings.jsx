@@ -110,14 +110,6 @@ export default function SettingsPage() {
             </Link>
           </li>
           <li>
-              <div
-                className="logout-button-settings"
-                style={isActive('/profile/settings/logout')}
-                onClick={confirmLogoutValidation}
-              >
-                <BiLogOut size={23} />
-                Logout
-              </div>
               {showLogoutValidation && (
                 <div className="modal-backdrop">
                   <div className="logout-confirmation">
