@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useState } from 'react';
-import { Link, Route, HashRouter as Router, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Route, BrowserRouter as Router, Routes, useLocation, useNavigate } from 'react-router-dom';
 import AboutUs from './components/AboutUs';
 import AccountSettings from './components/AccountSettings';
 import AdminDashboard from './components/AdminDashboard';

@@ -47,17 +47,19 @@ const Login = ({ onLogin }) => {
     }
   }, [query, navigate]);
 
-  const handleGoogleLogin = useCallback((e) => {
+  const handleGoogleLogin = (e) => {
     e.preventDefault();
-    const authUrl = 'https://penguinman-backend-production.up.railway.app/oauth2/authorization/google';
-    window.location.assign(authUrl);
-  }, []);
+    localStorage.setItem('preLoginPath', window.location.pathname);
+    const googleAuthUrl = 'https://penguinman-backend-production.up.railway.app/oauth2/authorization/google';
+    window.location.replace(googleAuthUrl);
+  };
 
-  const handleGithubLogin = useCallback((e) => {
+  const handleGithubLogin = (e) => {
     e.preventDefault();
-    const authUrl = 'https://penguinman-backend-production.up.railway.app/oauth2/authorization/github';
-    window.location.assign(authUrl);
-  }, []);
+    localStorage.setItem('preLoginPath', window.location.pathname);
+    const githubAuthUrl = 'https://penguinman-backend-production.up.railway.app/oauth2/authorization/github';
+    window.location.replace(githubAuthUrl);
+  };
 
   const handleReactivate = () => {
     navigate('/reactivate-account');
