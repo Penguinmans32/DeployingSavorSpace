@@ -172,45 +172,54 @@ const App = () => {
   const [username, setUsername] = useState('');
   const [role, setRole] = useState('');
   const navigate = useNavigate();
+  const BASE_URL = 'https://penguinman-backend-production.up.railway.app';
 
-  const fetchProfilePic = async () => {
-    const token = localStorage.getItem('authToken');
-    if (!token) {
-      setIsAuthenticated(false);
-      return;
+  const getImageURL = (imagePath) => {
+    if (!imagePath) return '/images/defaultProfiles.png'; // Your default image path
+    
+    // If it's already a full URL, return it as is
+    if (imagePath.startsWith('http')) {
+        return imagePath;
     }
-    try {
-      const response = await fetch('https://penguinman-backend-production.up.railway.app/users/me', {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
+    
+    // Remove any leading double slashes or single slashes
+    const cleanPath = imagePath.replace(/^\/+/, '');
+    
+    // Combine with base URL
+    return `${BASE_URL}/${cleanPath}`;
+};
+
+const fetchProfilePic = async () => {
+  const token = localStorage.getItem('authToken');
+  if (!token) {
+    setIsAuthenticated(false);
+    return;
+  }
+  try {
+    const response = await fetch(`${BASE_URL}/users/me`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
       }
-      const data = await response.json();
-  
-      setUsername(data.fullName);
-      setRole(data.role);
-      setIsAuthenticated(true);
-      
-      if(data.imageURL) {
-        const profilePicURL = data.imageURL.startsWith('http')
-          ? data.imageURL
-          : `https://penguinman-backend-production.up.railway.app${data.imageURL}`;
-        setProfilePic(profilePicURL);
-      }else {
-        setProfilePic(null);
-      }
-  
-      console.log('User data: ', data);
-    } catch (error) {
-      console.error('Error fetching profile picture:', error);
-      setIsAuthenticated(false);
-      // Don't remove token or redirect here
+    });
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
     }
-  };
+    const data = await response.json();
+
+    setUsername(data.fullName);
+    setRole(data.role);
+    setIsAuthenticated(true);
+    
+    // Use the unified getImageURL function
+    setProfilePic(getImageURL(data.imageURL));
+
+    console.log('User data: ', data);
+  } catch (error) {
+    console.error('Error fetching profile picture:', error);
+    setIsAuthenticated(false);
+  }
+};
 
   useEffect(() => {
     fetchProfilePic();
@@ -234,16 +243,14 @@ const App = () => {
       });
   
       if (response.ok) {
-        // Use window.history to clean up the URL before navigation
         window.history.replaceState({}, '', '/login');
         navigate('/login', { 
           replace: true,
-          state: {} // Ensure clean state
+          state: {} 
         });
       }
     } catch (error) {
       console.error('Error logging out:', error);
-      // Even if logout fails, redirect to login
       window.history.replaceState({}, '', '/login');
       navigate('/login', { 
         replace: true,
