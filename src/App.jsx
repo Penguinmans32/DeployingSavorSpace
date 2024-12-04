@@ -178,41 +178,53 @@ const App = () => {
     const url = window.location.href;
     
     // Check if this is an OAuth callback
-    if (url.includes('token=') && url.includes('refreshToken=')) {
+    if (url.includes('token=') || url.includes('code=')) {
       try {
-        // Extract tokens using regex
-        const tokenMatch = url.match(/token=([^&~]+)/);
-        const refreshTokenMatch = url.match(/refreshToken=([^&~]+)/);
-
-        if (tokenMatch && refreshTokenMatch) {
-          const token = tokenMatch[1];
-          const refreshToken = refreshTokenMatch[1];
-
+        // First try URLSearchParams
+        const params = new URLSearchParams(window.location.search);
+        let token = params.get('token');
+        let refreshToken = params.get('refreshToken');
+  
+        // If not found, try parsing from URL with custom delimiter
+        if (!token || !refreshToken) {
+          const segments = url.split('~and~');
+          for (const segment of segments) {
+            if (segment.includes('token=')) {
+              token = segment.split('token=')[1];
+            }
+            if (segment.includes('refreshToken=')) {
+              refreshToken = segment.split('refreshToken=')[1];
+            }
+          }
+        }
+  
+        // Clean up tokens if needed
+        token = token?.replace(/[^A-Za-z0-9._-]/g, '');
+        refreshToken = refreshToken?.replace(/[^A-Za-z0-9._-]/g, '');
+  
+        if (token && refreshToken) {
           // Store tokens
           localStorage.setItem('authToken', token);
           localStorage.setItem('refreshToken', refreshToken);
-
-          // Clean up URL
-          window.history.replaceState({}, document.title, '/homepage');
-          
-          // Set authenticated state
           setIsAuthenticated(true);
           
-          // Navigate to homepage
-          navigate('/homepage');
-          
-          // Fetch user profile
-          fetchProfilePic();
+          // Redirect to home or intended path
+          const intendedPath = localStorage.getItem('preLoginPath') || '/homepage';
+          navigate(intendedPath);
+        } else {
+          console.error('Invalid tokens received');
+          navigate('/login');
         }
       } catch (error) {
-        console.error('Error handling OAuth callback:', error);
+        console.error('Error processing OAuth callback:', error);
+        navigate('/login');
       }
     }
-  }, [navigate]); // Add dependencies
-
+  }, [navigate]);
+  
   useEffect(() => {
     handleOAuthCallback();
-  }, [handleOAuthCallback, location]); // Add location as dependency
+  }, [handleOAuthCallback]);
 
   const fetchProfilePic = async () => {
     const token = localStorage.getItem('authToken');
