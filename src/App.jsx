@@ -231,7 +231,8 @@ const App = () => {
     setUsername('');
     setRole('');
     setIsAuthenticated(false);
-    navigate('/login');
+    navigate('/#/login', { replace: true });
+    window.location.reload();
   };
 
   const handleLogin = () => {
