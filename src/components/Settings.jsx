@@ -53,7 +53,7 @@ export default function SettingsPage() {
       setUsername('');
       setRole('');
       setIsAuthenticated(false);
-      window.location.href = '/login';
+      navigate('/login');
     } catch (error) {
       console.error('Error logging out:', error);
       alert('Failed to logout. Please try again.');
