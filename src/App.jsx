@@ -174,24 +174,6 @@ const App = () => {
   const navigate = useNavigate();
   const BASE_URL = 'https://penguinman-backend-production.up.railway.app';
 
-  const getImageURL = (imagePath) => {
-    if (!imagePath) {
-        return '/images/defaultProfiles.png';
-    }
-
-    if (imagePath.startsWith('http')) {
-        return imagePath;
-    }
-
-
-    if (imagePath.startsWith('/uploads/')) {
-        return `${BASE_URL}${imagePath}`;
-    }
-
-    const cleanPath = imagePath.startsWith('/') ? imagePath.slice(1) : imagePath;
-    return `${BASE_URL}/${cleanPath}`;
-};
-
 const fetchProfilePic = async () => {
   const token = localStorage.getItem('authToken');
   if (!token) {
@@ -200,58 +182,45 @@ const fetchProfilePic = async () => {
   }
 
   try {
-    const response = await fetch(`${BASE_URL}/users/me`, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      }
-    });
+    // Use your axios instance instead of fetch
+    const response = await api.get('/users/me');
+    
+    // Extract only the fields we need based on your UserDTO
+    const userData = {
+      id: response.data.id,
+      username: response.data.username,
+      imageURL: response.data.imageURL,
+      email: response.data.email,
+      fullName: response.data.fullName,
+      role: response.data.role // if you need it
+    };
 
-    if (!response.ok) {
-      throw new Error(`Network response was not ok: ${response.status}`);
-    }
-
-    // Get the raw text first
-    const rawText = await response.text();
-
-    let data;
-    try {
-      // Remove any potential BOM and extra characters
-      const cleanText = rawText.trim().replace(/^\uFEFF/, '');
-      data = JSON.parse(cleanText);
-    } catch (parseError) {
-      console.error('Raw response text:', rawText);
-      console.error('JSON Parse error:', parseError);
-      throw new Error('Failed to parse server response');
-    }
-
-    // Validate the data
-    if (!data || typeof data !== 'object') {
-      throw new Error('Invalid response format');
-    }
-
-    setUsername(data.fullName || '');
-    setRole(data.role || '');
+    // Update state with the sanitized data
+    setUsername(userData.fullName || userData.username || '');
+    setRole(userData.role || 'USER'); // default to USER if not provided
     setIsAuthenticated(true);
     
-    console.log('Raw imageURL from backend:', data.imageURL); 
-    const profilePicURL = getImageURL(data.imageURL);
+    console.log('Raw imageURL from backend:', userData.imageURL); 
+    const profilePicURL = getImageURL(userData.imageURL);
     console.log('Processed profile picture URL:', profilePicURL);
     setProfilePic(profilePicURL);
 
-    console.log('User data: ', data);
+    console.log('User data:', userData);
   } catch (error) {
     console.error('Error fetching profile picture:', error);
     setIsAuthenticated(false);
     setProfilePic(null);
     setUsername('');
     setRole('');
-    
-    // Optional: Show error to user
-    // setErrorMessage(error.message);
-    // setShowErrorToast(true);
   }
+};
+
+// Update your getImageURL function
+const getImageURL = (imageURL) => {
+  if (!imageURL) return getImagePath("defaultProfiles.png");
+  if (imageURL.startsWith('http')) return imageURL;
+  if (imageURL.startsWith('/uploads/')) return `${BASE_URL}${imageURL}`;
+  return `${BASE_URL}/${imageURL.replace(/^\//, '')}`;
 };
 
   useEffect(() => {
