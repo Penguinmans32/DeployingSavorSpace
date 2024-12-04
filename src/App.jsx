@@ -198,20 +198,41 @@ const fetchProfilePic = async () => {
     setIsAuthenticated(false);
     return;
   }
+
   try {
     const response = await fetch(`${BASE_URL}/users/me`, {
       headers: {
         'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
       }
     });
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const data = await response.json();
 
-    setUsername(data.fullName);
-    setRole(data.role);
+    if (!response.ok) {
+      throw new Error(`Network response was not ok: ${response.status}`);
+    }
+
+    // Get the raw text first
+    const rawText = await response.text();
+
+    let data;
+    try {
+      // Remove any potential BOM and extra characters
+      const cleanText = rawText.trim().replace(/^\uFEFF/, '');
+      data = JSON.parse(cleanText);
+    } catch (parseError) {
+      console.error('Raw response text:', rawText);
+      console.error('JSON Parse error:', parseError);
+      throw new Error('Failed to parse server response');
+    }
+
+    // Validate the data
+    if (!data || typeof data !== 'object') {
+      throw new Error('Invalid response format');
+    }
+
+    setUsername(data.fullName || '');
+    setRole(data.role || '');
     setIsAuthenticated(true);
     
     console.log('Raw imageURL from backend:', data.imageURL); 
@@ -223,6 +244,13 @@ const fetchProfilePic = async () => {
   } catch (error) {
     console.error('Error fetching profile picture:', error);
     setIsAuthenticated(false);
+    setProfilePic(null);
+    setUsername('');
+    setRole('');
+    
+    // Optional: Show error to user
+    // setErrorMessage(error.message);
+    // setShowErrorToast(true);
   }
 };
 

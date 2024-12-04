@@ -190,7 +190,13 @@ const RecipeComments = ({ recipeId, isVisible}) => {
       
       try {
           console.log('Fetching comments for recipe:', recipeId);
-          console.log('Using token:', token ? 'Token present' : 'No token');
+          
+          // Validate token
+          if (!token) {
+              console.warn('No authentication token present');
+              setComments([]);
+              return;
+          }
   
           const response = await fetch(`https://penguinman-backend-production.up.railway.app/api/comments/recipe/${recipeId}`, {
               method: 'GET',
@@ -202,43 +208,68 @@ const RecipeComments = ({ recipeId, isVisible}) => {
           });
   
           console.log('Response status:', response.status);
+          
+          // Get raw response text
           const responseText = await response.text();
-          console.log('Raw response text:', responseText);
-  
+          
+          // Clean the response text
+          const cleanText = responseText.trim().replace(/^\uFEFF/, ''); // Remove BOM and trim whitespace
+          
           if (!response.ok) {
-              throw new Error(`Server error: ${responseText}`);
+              throw new Error(`Server error (${response.status}): ${cleanText}`);
           }
   
+          // Parse JSON with error handling
           let data;
           try {
-              data = JSON.parse(responseText);
-              console.log('Parsed comments:', data);
-          } catch (e) {
-              console.error('Failed to parse JSON:', e);
+              data = JSON.parse(cleanText);
+              console.log('Raw parsed data:', data);
+          } catch (parseError) {
+              console.error('Failed to parse JSON:', parseError);
+              console.error('Raw response:', cleanText);
               throw new Error('Invalid JSON response from server');
           }
   
-          // Transform the data to match the CommentDTO structure
-          const formattedComments = Array.isArray(data) ? data.map(comment => ({
-              commentID: comment.commentID, // Match the case from CommentDTO
-              content: comment.content,
-              createdAt: comment.createdAt, // Match the case from CommentDTO
-              flagged: comment.flagged,
-              flaggedByUsers: comment.flaggedByUsers || [],
-              flagCount: comment.flaggedByUsers ? comment.flaggedByUsers.length : 0,
-              recipeID: comment.recipeID, // Match the case from CommentDTO
-              userID: comment.userID, // Match the case from CommentDTO
-              username: comment.username,
-              userEmail: comment.userEmail,
-              userImageURL: comment.userImageURL || getImagePath("defaultProfiles.png")
-          })) : [];
+          // Validate data structure
+          if (!Array.isArray(data)) {
+              console.warn('Received non-array data:', data);
+              data = data.comments || []; // Try to get comments array if it exists
+          }
+  
+          // Transform and validate each comment
+          const formattedComments = data.map(comment => {
+              if (!comment) return null;
+  
+              return {
+                  commentID: comment.commentID || 0,
+                  content: comment.content || '',
+                  createdAt: comment.createdAt || new Date().toISOString(),
+                  flagged: Boolean(comment.flagged),
+                  flaggedByUsers: Array.isArray(comment.flaggedByUsers) ? comment.flaggedByUsers : [],
+                  flagCount: Array.isArray(comment.flaggedByUsers) ? comment.flaggedByUsers.length : 0,
+                  recipeID: comment.recipeID || recipeId,
+                  userID: comment.userID || 0,
+                  username: comment.username || 'Anonymous',
+                  userEmail: comment.userEmail || '',
+                  userImageURL: comment.userImageURL || getImagePath("defaultProfiles.png")
+              };
+          }).filter(comment => comment !== null); // Remove any null entries
   
           console.log('Formatted comments:', formattedComments);
           setComments(formattedComments);
           
       } catch (error) {
           console.error('Error fetching comments:', error);
+          // Provide more specific error handling
+          if (error.message.includes('Invalid JSON')) {
+              console.error('JSON parsing error - please check server response format');
+          } else if (error.message.includes('Server error')) {
+              console.error('Server responded with an error');
+          }
           setComments([]);
+          
+          // Optional: Notify user of error
+          // setError('Failed to load comments. Please try again later.');
       }
   };
 
