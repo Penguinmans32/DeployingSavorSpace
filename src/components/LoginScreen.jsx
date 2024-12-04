@@ -47,15 +47,17 @@ const Login = ({ onLogin }) => {
     }
   }, [query, navigate]);
 
-  const handleGoogleLogin = (e) => {
+  const handleGoogleLogin = useCallback((e) => {
     e.preventDefault();
-    navigate('https://penguinman-backend-production.up.railway.app/oauth2/authorization/google', { replace: true });
-  };
+    const authUrl = 'https://penguinman-backend-production.up.railway.app/oauth2/authorization/google';
+    window.location.assign(authUrl);
+  }, []);
 
-  const handleGithubLogin = (e) => {
+  const handleGithubLogin = useCallback((e) => {
     e.preventDefault();
-    navigate('https://penguinman-backend-production.up.railway.app/oauth2/authorization/github', { replace: true });
-  };
+    const authUrl = 'https://penguinman-backend-production.up.railway.app/oauth2/authorization/github';
+    window.location.assign(authUrl);
+  }, []);
 
   const handleReactivate = () => {
     navigate('/reactivate-account');
@@ -188,11 +190,19 @@ const Login = ({ onLogin }) => {
           <span>Don&apos;t have an account? <Link to="/register" className="register">Register</Link></span>
           <p>Or login with</p>
           <div className="social-options">
-            <button onClick={handleGoogleLogin} className="google-btn">
+            <button 
+              type="button" 
+              onClick={handleGoogleLogin} 
+              className="google-btn"
+            >
               <FcGoogle />
               <span>Google</span>
             </button>
-            <button onClick={handleGithubLogin} className="github-btn">
+            <button 
+              type="button"
+              onClick={handleGithubLogin} 
+              className="github-btn"
+            >
               <IoLogoGithub />
               <span>Github</span> 
             </button>
