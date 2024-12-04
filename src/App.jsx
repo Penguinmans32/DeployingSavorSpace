@@ -42,7 +42,7 @@ const Navbar = ({ profilePic, handleLogout, isAuthenticated }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showLogoutValidation, setShowLogoutValidation] = useState(false);
 
-  const defaultProfilePic = "/images/defaultProfiles.png";
+  const defaultProfilePic = "/src/images/defaultProfiles.png";
   const [imgSrc, setImgSrc] = useState(profilePic || defaultProfilePic);
 
   useEffect(() => {
@@ -172,118 +172,67 @@ const App = () => {
   const [username, setUsername] = useState('');
   const [role, setRole] = useState('');
   const navigate = useNavigate();
-  const BASE_URL = 'https://penguinman-backend-production.up.railway.app';
 
-  const getImageURL = async (imagePath) => {
+  const fetchProfilePic = async () => {
+    const token = localStorage.getItem('authToken');
+    if (!token) {
+      setIsAuthenticated(false);
+      return;
+    }
     try {
-      if (!imagePath) {
-        return '/images/defaultProfiles.png';
+      const response = await fetch('https://penguinman-backend-production.up.railway.app/users/me', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+  
+      setUsername(data.fullName);
+      setRole(data.role);
+      setIsAuthenticated(true);
+      
+      if(data.imageURL) {
+        const profilePicURL = data.imageURL.startsWith('http')
+          ? data.imageURL
+          : `https://penguinman-backend-production.up.railway.app${data.imageURL}`;
+        setProfilePic(profilePicURL);
+      }else {
+        setProfilePic(null);
       }
   
-      if (imagePath.startsWith('http')) {
-        return imagePath;
-      }
-  
-      if (imagePath.startsWith('/uploads/')) {
-        const response = await fetch(`${BASE_URL}${imagePath}`);
-        
-        // Check if response is ok
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        // Validate Content-Type
-        const contentType = response.headers.get('content-type');
-        if (!contentType || !contentType.includes('application/json')) {
-          throw new TypeError("Expected JSON response but got " + contentType);
-        }
-  
-        // Carefully parse JSON
-        const data = await response.text();
-        try {
-          return JSON.parse(data);
-        } catch (e) {
-          console.error('JSON Parse Error:', e);
-          console.log('Raw response:', data);
-          throw new Error('Invalid JSON response from server');
-        }
-      }
+      console.log('User data: ', data);
     } catch (error) {
-      console.error('Error in getImageURL:', error);
-      return '/images/defaultProfiles.png'; // Fallback image
+      console.error('Error fetching profile picture:', error);
+      setIsAuthenticated(false);
+      // Don't remove token or redirect here
     }
-  }
-
-const fetchProfilePic = async () => {
-  const token = localStorage.getItem('authToken');
-  if (!token) {
-    setIsAuthenticated(false);
-    return;
-  }
-  try {
-    const response = await fetch(`${BASE_URL}/users/me`, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      }
-    });
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    const data = await response.json();
-
-    setUsername(data.fullName);
-    setRole(data.role);
-    setIsAuthenticated(true);
-    
-    console.log('Raw imageURL from backend:', data.imageURL); 
-    const profilePicURL = getImageURL(data.imageURL);
-    console.log('Processed profile picture URL:', profilePicURL);
-    setProfilePic(profilePicURL);
-
-    console.log('User data: ', data);
-  } catch (error) {
-    console.error('Error fetching profile picture:', error);
-    setIsAuthenticated(false);
-  }
-};
+  };
 
   useEffect(() => {
     fetchProfilePic();
   }, []);
 
   const handleLogout = async () => {
-    // First clear all tokens and state
-    localStorage.clear(); // Clear all localStorage items at once
-    
-    // Reset all states first
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('refreshToken');
+    try {
+      await fetch('https://penguinman-backend-production.up.railway.app/auth/logout/github', {
+        method: 'GET',
+        credentials: 'include',
+      });
+    }catch (error) {
+      console.error('Error logging out:', error);
+    }
     setProfilePic(null);
     setUsername('');
     setRole('');
     setIsAuthenticated(false);
-  
-    try {
-      // Perform logout request
-      const response = await fetch('https://penguinman-backend-production.up.railway.app/auth/logout/github', {
-        method: 'GET',
-        credentials: 'include',
-      });
-  
-      if (response.ok) {
-        window.history.replaceState({}, '', '/login');
-        navigate('/login', { 
-          replace: true,
-          state: {} 
-        });
-      }
-    } catch (error) {
-      console.error('Error logging out:', error);
-      window.history.replaceState({}, '', '/login');
-      navigate('/login', { 
-        replace: true,
-        state: {}
-      });
-    }
+    navigate('/login');
+    window.location.reload();
   };
 
   const handleLogin = () => {
