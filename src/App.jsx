@@ -171,6 +171,7 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [username, setUsername] = useState('');
   const [role, setRole] = useState('');
+  const navigate = useNavigate();
 
   const fetchProfilePic = async () => {
     const token = localStorage.getItem('authToken');
@@ -230,7 +231,7 @@ const App = () => {
     setUsername('');
     setRole('');
     setIsAuthenticated(false);
-    window.location.href = '/login';
+    navigate('/login');
   };
 
   const handleLogin = () => {
