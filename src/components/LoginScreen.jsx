@@ -49,12 +49,12 @@ const Login = ({ onLogin }) => {
 
   const handleGoogleLogin = (e) => {
     e.preventDefault();
-    window.open('https://penguinman-backend-production.up.railway.app/oauth2/authorization/google', '_self');
+    navigate('https://penguinman-backend-production.up.railway.app/oauth2/authorization/google', { replace: true });
   };
 
   const handleGithubLogin = (e) => {
     e.preventDefault();
-    window.open('https://penguinman-backend-production.up.railway.app/oauth2/authorization/github', '_self');
+    navigate('https://penguinman-backend-production.up.railway.app/oauth2/authorization/github', { replace: true });
   };
 
   const handleReactivate = () => {
