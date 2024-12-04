@@ -49,7 +49,11 @@ const Login = ({ onLogin }) => {
 
   const handleGoogleLogin = (e) => {
     e.preventDefault();
-    const googleAuthUrl = 'https://penguinman-backend-production.up.railway.app/oauth2/authorization/google';
+    const baseUrl = 'https://penguinman-backend-production.up.railway.app';
+    const googleAuthUrl = `${baseUrl}/oauth2/authorization/google`;
+    
+    localStorage.setItem('preLoginPath', window.location.pathname);
+    
     window.location.replace(googleAuthUrl);
 };
 
@@ -62,6 +66,24 @@ const Login = ({ onLogin }) => {
   const handleReactivate = () => {
     navigate('/reactivate-account');
   }
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token');
+    const refreshToken = params.get('refreshToken');
+
+    if (token && refreshToken) {
+        // Store tokens
+        localStorage.setItem('authToken', token);
+        localStorage.setItem('refreshToken', refreshToken);
+        
+        // Clear URL parameters
+        window.history.replaceState({}, document.title, window.location.pathname);
+        
+        // Navigate to homepage
+        navigate('/homepage');
+    }
+}, [navigate]);
 
 
   const validate = () => {
