@@ -175,22 +175,19 @@ const App = () => {
   const BASE_URL = 'https://penguinman-backend-production.up.railway.app';
 
   const getImageURL = (imagePath) => {
-    // If no image path provided, return default image
     if (!imagePath) {
         return '/images/defaultProfiles.png';
     }
 
-    // If it's already a full URL (starts with http/https), return as is
     if (imagePath.startsWith('http')) {
         return imagePath;
     }
 
-    // Handle relative paths from backend
+
     if (imagePath.startsWith('/uploads/')) {
         return `${BASE_URL}${imagePath}`;
     }
 
-    // For all other cases, assume it's a relative path and combine with BASE_URL
     const cleanPath = imagePath.startsWith('/') ? imagePath.slice(1) : imagePath;
     return `${BASE_URL}/${cleanPath}`;
 };
@@ -217,9 +214,9 @@ const fetchProfilePic = async () => {
     setRole(data.role);
     setIsAuthenticated(true);
     
-    console.log('Raw imageURL from backend:', data.imageURL); // Debug log
+    console.log('Raw imageURL from backend:', data.imageURL); 
     const profilePicURL = getImageURL(data.imageURL);
-    console.log('Processed profile picture URL:', profilePicURL); // Debug log
+    console.log('Processed profile picture URL:', profilePicURL);
     setProfilePic(profilePicURL);
 
     console.log('User data: ', data);
