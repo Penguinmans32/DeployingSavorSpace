@@ -42,7 +42,7 @@ const Navbar = ({ profilePic, handleLogout, isAuthenticated }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [showLogoutValidation, setShowLogoutValidation] = useState(false);
 
-  const defaultProfilePic = "/src/images/defaultProfiles.png";
+  const defaultProfilePic = "/images/defaultProfiles.png";
   const [imgSrc, setImgSrc] = useState(profilePic || defaultProfilePic);
 
   useEffect(() => {
@@ -175,17 +175,23 @@ const App = () => {
   const BASE_URL = 'https://penguinman-backend-production.up.railway.app';
 
   const getImageURL = (imagePath) => {
-    if (!imagePath) return '/images/defaultProfiles.png'; // Your default image path
-    
-    // If it's already a full URL, return it as is
+    // If no image path provided, return default image
+    if (!imagePath) {
+        return '/images/defaultProfiles.png';
+    }
+
+    // If it's already a full URL (starts with http/https), return as is
     if (imagePath.startsWith('http')) {
         return imagePath;
     }
-    
-    // Remove any leading double slashes or single slashes
-    const cleanPath = imagePath.replace(/^\/+/, '');
-    
-    // Combine with base URL
+
+    // Handle relative paths from backend
+    if (imagePath.startsWith('/uploads/')) {
+        return `${BASE_URL}${imagePath}`;
+    }
+
+    // For all other cases, assume it's a relative path and combine with BASE_URL
+    const cleanPath = imagePath.startsWith('/') ? imagePath.slice(1) : imagePath;
     return `${BASE_URL}/${cleanPath}`;
 };
 
@@ -211,8 +217,10 @@ const fetchProfilePic = async () => {
     setRole(data.role);
     setIsAuthenticated(true);
     
-    // Use the unified getImageURL function
-    setProfilePic(getImageURL(data.imageURL));
+    console.log('Raw imageURL from backend:', data.imageURL); // Debug log
+    const profilePicURL = getImageURL(data.imageURL);
+    console.log('Processed profile picture URL:', profilePicURL); // Debug log
+    setProfilePic(profilePicURL);
 
     console.log('User data: ', data);
   } catch (error) {
