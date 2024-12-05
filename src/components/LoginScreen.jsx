@@ -47,9 +47,17 @@ const Login = ({ onLogin }) => {
     }
   }, [query, navigate]);
 
-  const handleGoogleLogin = () => {
+  const handleGoogleLogin = (e) => {
+    e.preventDefault();
     const baseUrl = 'https://penguinman-backend-production.up.railway.app';
-    const googleAuthUrl = `${baseUrl}/oauth2/authorization/google`;
+    const redirectUri = encodeURIComponent('https://savorspace.systems/auth-callback');
+    const state = Math.random().toString(36).substring(7);
+    
+    // Store state in localStorage to verify later
+    localStorage.setItem('oauth_state', state);
+    
+    const googleAuthUrl = `${baseUrl}/oauth2/authorization/google?redirect_uri=${redirectUri}&state=${state}`;
+    
     window.location.href = googleAuthUrl;
 };
 

@@ -1,41 +1,63 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const AuthCallback = () => {
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+
+    const containerStyle = {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh'
+    };
+
+    const spinnerStyle = {
+        textAlign: 'center'
+    };
+
+    const spinnerTextStyle = {
+        display: 'block',
+        marginTop: '10px'
+    };
 
     useEffect(() => {
-        const handleCallback = () => {
-            const params = new URLSearchParams(window.location.search);
-            const token = params.get('token');
-            const refreshToken = params.get('refreshToken');
-            const error = params.get('error');
+        const handleAuth = () => {
+            try {
+                const rawParams = window.location.search;
+                const params = new URLSearchParams(rawParams);
+                const token = params.get('token');
+                const refreshToken = params.get('refreshToken');
 
-            if (error) {
-                toast.error('Authentication failed');
-                navigate('/login');
-                return;
-            }
+                if (!token || !refreshToken) {
+                    console.error('Missing tokens in URL');
+                    toast.error('Authentication failed');
+                    navigate('/login');
+                    return;
+                }
 
-            if (token && refreshToken) {
-                // Store tokens
                 localStorage.setItem('authToken', token);
                 localStorage.setItem('refreshToken', refreshToken);
-                
-                // Clear URL and redirect
-                navigate('/homepage', { replace: true });
                 toast.success('Successfully logged in!');
-            } else {
-                toast.error('Invalid authentication response');
+                navigate('/homepage', { replace: true });
+            } catch (error) {
+                console.error('Auth callback error:', error);
+                toast.error('Authentication failed');
                 navigate('/login');
             }
         };
 
-        handleCallback();
+        handleAuth();
     }, [navigate]);
 
-    return null; 
+    return (
+        <div style={containerStyle}>
+            <div style={spinnerStyle}>
+                <span style={spinnerTextStyle}>Completing login...</span>
+            </div>
+        </div>
+    );
 };
 
 export default AuthCallback;
