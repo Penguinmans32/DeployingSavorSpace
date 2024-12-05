@@ -49,15 +49,9 @@ const Login = ({ onLogin }) => {
 
   const handleGoogleLogin = (e) => {
     e.preventDefault();
-    try {
-        const baseUrl = 'https://penguinman-backend-production.up.railway.app';
-        const googleAuthUrl = `${baseUrl}/oauth2/authorization/google`;
-        const state = Math.random().toString(36).substring(7);
-        localStorage.setItem('oauth2_state', state);
-        window.location.href = `${googleAuthUrl}?state=${state}`;
-    } catch (error) {
-        console.error('Error during Google login:', error);
-    }
+    const baseUrl = 'https://penguinman-backend-production.up.railway.app';
+    const googleAuthUrl = `${baseUrl}/oauth2/authorization/google`;
+    window.location.href = googleAuthUrl;
 };
 
   const handleGithubLogin = (e) => {

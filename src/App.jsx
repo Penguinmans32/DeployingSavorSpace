@@ -174,60 +174,8 @@ const App = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleAuthTokens = useCallback(() => {
-    const params = new URLSearchParams(window.location.search);
-    const token = params.get('token');
-    const refreshToken = params.get('refreshToken');
-    const error = params.get('error');
 
-    if (error) {
-        // Handle error case
-        toast.error('Authentication failed. Please try again.');
-        navigate('/login');
-        return;
-    }
-
-    if (token && refreshToken) {
-        try {
-            // Store tokens
-            localStorage.setItem('authToken', token);
-            localStorage.setItem('refreshToken', refreshToken);
-            
-            // Clean up URL
-            window.history.replaceState({}, document.title, '/homepage');
-            
-            // Set authenticated state
-            setIsAuthenticated(true);
-            
-            // Fetch user profile
-            fetchProfilePic()
-                .then(() => {
-                    // Show success message
-                    toast.success('Successfully logged in!');
-                    
-                    // Navigate to homepage
-                    navigate('/homepage', { replace: true });
-                })
-                .catch((error) => {
-                    console.error('Error fetching profile:', error);
-                    toast.error('Logged in but failed to fetch profile.');
-                });
-        } catch (error) {
-            console.error('Error handling authentication:', error);
-            toast.error('Something went wrong. Please try again.');
-            localStorage.removeItem('authToken');
-            localStorage.removeItem('refreshToken');
-            setIsAuthenticated(false);
-            navigate('/login');
-        }
-    }
-}, [navigate, setIsAuthenticated, fetchProfilePic]);
-  
-  useEffect(() => {
-    handleAuthTokens();
-  }, [handleAuthTokens]);
-
-  const fetchProfilePic = async () => {
+  const fetchProfilePic = useCallback(async () => {
     const token = localStorage.getItem('authToken');
     if (!token) {
       setIsAuthenticated(false);
@@ -254,21 +202,70 @@ const App = () => {
           ? data.imageURL
           : `https://penguinman-backend-production.up.railway.app${data.imageURL}`;
         setProfilePic(profilePicURL);
-      }else {
+      } else {
         setProfilePic(null);
       }
-  
-      console.log('User data: ', data);
     } catch (error) {
-      console.error('Error fetching profile picture:', error);
+      console.error('Error fetching profile:', error);
       setIsAuthenticated(false);
-      // Don't remove token or redirect here
     }
-  };
+  }, []);
+
+  const handleAuthTokens = useCallback(() => {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token');
+    const refreshToken = params.get('refreshToken');
+    const error = params.get('error');
+
+    if (error) {
+      toast.error('Authentication failed. Please try again.');
+      navigate('/login');
+      return;
+    }
+
+    if (token && refreshToken) {
+      try {
+        // Store tokens
+        localStorage.setItem('authToken', token);
+        localStorage.setItem('refreshToken', refreshToken);
+        
+        // Clean up URL
+        window.history.replaceState({}, document.title, '/homepage');
+        
+        // Set authenticated state
+        setIsAuthenticated(true);
+        
+        // Fetch user profile
+        fetchProfilePic()
+          .then(() => {
+            toast.success('Successfully logged in!');
+            navigate('/homepage', { replace: true });
+          })
+          .catch((error) => {
+            console.error('Error fetching profile:', error);
+            toast.error('Logged in but failed to fetch profile.');
+          });
+      } catch (error) {
+        console.error('Error handling authentication:', error);
+        toast.error('Something went wrong. Please try again.');
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('refreshToken');
+        setIsAuthenticated(false);
+        navigate('/login');
+      }
+    }
+  }, [navigate, fetchProfilePic]);
+  
+  useEffect(() => {
+    handleAuthTokens();
+  }, [handleAuthTokens]);
 
   useEffect(() => {
-    fetchProfilePic();
-  }, []);
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      fetchProfilePic();
+    }
+  }, [fetchProfilePic]);
 
   const handleLogout = async () => {
     localStorage.removeItem('authToken');
@@ -289,9 +286,9 @@ const App = () => {
     window.location.reload();
   };
 
-  const handleLogin = () => {
+  const handleLogin = useCallback(() => {
     fetchProfilePic();
-  };
+  }, [fetchProfilePic]);
 
   return (
       <div>
