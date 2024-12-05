@@ -6,41 +6,20 @@ const AuthCallback = () => {
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
 
-    const containerStyle = {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh'
-    };
-
-    const spinnerStyle = {
-        textAlign: 'center'
-    };
-
-    const spinnerTextStyle = {
-        display: 'block',
-        marginTop: '10px'
-    };
-
     useEffect(() => {
-        const handleAuth = () => {
+        const handleCallback = async () => {
             try {
-                const rawParams = window.location.search;
-                const params = new URLSearchParams(rawParams);
-                const token = params.get('token');
-                const refreshToken = params.get('refreshToken');
+                const token = searchParams.get('token');
+                const refreshToken = searchParams.get('refreshToken');
 
                 if (!token || !refreshToken) {
-                    console.error('Missing tokens in URL');
-                    toast.error('Authentication failed');
-                    navigate('/login');
-                    return;
+                    throw new Error('Missing authentication tokens');
                 }
 
                 localStorage.setItem('authToken', token);
                 localStorage.setItem('refreshToken', refreshToken);
                 toast.success('Successfully logged in!');
-                navigate('/homepage', { replace: true });
+                navigate('/homepage');
             } catch (error) {
                 console.error('Auth callback error:', error);
                 toast.error('Authentication failed');
@@ -48,14 +27,17 @@ const AuthCallback = () => {
             }
         };
 
-        handleAuth();
-    }, [navigate]);
+        handleCallback();
+    }, [navigate, searchParams]);
 
     return (
-        <div style={containerStyle}>
-            <div style={spinnerStyle}>
-                <span style={spinnerTextStyle}>Completing login...</span>
-            </div>
+        <div style={{ 
+            display: 'flex', 
+            justifyContent: 'center', 
+            alignItems: 'center', 
+            height: '100vh' 
+        }}>
+            <div>Processing authentication...</div>
         </div>
     );
 };
