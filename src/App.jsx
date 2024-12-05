@@ -213,46 +213,45 @@ const App = () => {
   }, []);
 
   const handleOAuthCallback = useCallback(() => {
-    // Check if we're on the homepage with token parameters
-    if (location.pathname === '/homepage' && location.search.includes('token')) {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('t');
+    const refreshToken = params.get('r');
+  
+    if (token && refreshToken) {
       try {
-        const params = new URLSearchParams(location.search);
-        const token = params.get('token');
-        const refreshToken = params.get('refreshToken');
-
-        if (token && refreshToken) {
-          // Store tokens
-          localStorage.setItem('authToken', token);
-          localStorage.setItem('refreshToken', refreshToken);
-          
-          // Update authentication state
-          setIsAuthenticated(true);
-          
-          // Clean up URL
-          window.history.replaceState({}, document.title, '/homepage');
-          
-          // Fetch user profile
-          fetchProfilePic()
-            .then(() => {
-              toast.success('Successfully logged in!');
-            })
-            .catch((error) => {
-              console.error('Error fetching profile:', error);
-              toast.error('Logged in but failed to fetch profile.');
-            });
-        }
+        // Store tokens
+        localStorage.setItem('authToken', token);
+        localStorage.setItem('refreshToken', refreshToken);
+        
+        // Update authentication state
+        setIsAuthenticated(true);
+        
+        // Clean up URL
+        window.history.replaceState({}, document.title, '/homepage');
+        
+        // Fetch user profile
+        fetchProfilePic()
+          .then(() => {
+            toast.success('Successfully logged in!');
+          })
+          .catch((error) => {
+            console.error('Error fetching profile:', error);
+            toast.error('Logged in but failed to fetch profile.');
+          });
       } catch (error) {
         console.error('Error handling OAuth callback:', error);
         toast.error('Authentication failed');
         navigate('/login');
       }
     }
-  }, [location, navigate, fetchProfilePic]);
+  }, [navigate, fetchProfilePic]);
   
   useEffect(() => {
-    handleOAuthCallback();
-  }, [handleOAuthCallback]);
-
+    if (location.search.includes('t=')) {
+      handleOAuthCallback();
+    }
+  }, [location.search, handleOAuthCallback]);
+  
   useEffect(() => {
     const token = localStorage.getItem('authToken');
     if (token) {
