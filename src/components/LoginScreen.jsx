@@ -207,6 +207,17 @@ const Login = ({ onLogin }) => {
           </div>
         <div className="login-options">
           <span>Don&apos;t have an account? <Link to="/register" className="register">Register</Link></span>
+          <p>--Or log in with --</p>
+          <div className="social-options">
+            <button onClick={handleGoogleLogin} className="google-btn">
+              <FcGoogle />
+              <span>Google</span>
+            </button>
+            <button onClick={handleGithubLogin} className="github-btn">
+              <IoLogoGithub />
+              <span>Github</span>
+            </button>
+          </div>
           <div className="reactivate">
             <span>Deactivated Account? Activate it here!</span>
             <button onClick={handleReactivate} className="reactivate-btn">
