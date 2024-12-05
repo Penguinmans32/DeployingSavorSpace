@@ -47,8 +47,7 @@ const Login = ({ onLogin }) => {
     }
   }, [query, navigate]);
 
-  const handleGoogleLogin = (e) => {
-    e.preventDefault();
+  const handleGoogleLogin = () => {
     const baseUrl = 'https://penguinman-backend-production.up.railway.app';
     const googleAuthUrl = `${baseUrl}/oauth2/authorization/google`;
     window.location.href = googleAuthUrl;

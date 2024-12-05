@@ -30,6 +30,7 @@ import SettingsPage from './components/Settings';
 import Register from './components/SignupScreen';
 import './styles/MainStyles.css';
 import { getImagePath } from './utils/imageUtils';
+import AuthCallback from './components/AuthCallBack';
 
 // Navbar Component
 const Navbar = ({ profilePic, handleLogout, isAuthenticated }) => {
@@ -324,6 +325,7 @@ const App = () => {
           <Route path="/forgot-password" element={<ForgotPasswordForm />} />
           <Route path="/community/recipe/:recipeId" element={<RecipeDetail />} />
           <Route path="/community/:recipeId" element={<PostingPage />} />
+          <Route path="/auth-callback" element={<AuthCallback />} />
         </Routes>
       </div>
   );
