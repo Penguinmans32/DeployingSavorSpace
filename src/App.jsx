@@ -214,8 +214,8 @@ const App = () => {
 
   const handleOAuthCallback = useCallback(() => {
     const params = new URLSearchParams(window.location.search);
-    const token = params.get('t');
-    const refreshToken = params.get('r');
+    const token = params.get('token');
+    const refreshToken = params.get('refreshToken');
   
     if (token && refreshToken) {
       try {
@@ -229,7 +229,7 @@ const App = () => {
         // Clean up URL
         window.history.replaceState({}, document.title, '/homepage');
         
-        // Fetch user profile
+        // Fetch user profile immediately
         fetchProfilePic()
           .then(() => {
             toast.success('Successfully logged in!');
@@ -237,27 +237,40 @@ const App = () => {
           .catch((error) => {
             console.error('Error fetching profile:', error);
             toast.error('Logged in but failed to fetch profile.');
+            // Clear tokens if profile fetch fails
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('refreshToken');
+            setIsAuthenticated(false);
           });
       } catch (error) {
         console.error('Error handling OAuth callback:', error);
         toast.error('Authentication failed');
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('refreshToken');
+        setIsAuthenticated(false);
         navigate('/login');
       }
     }
   }, [navigate, fetchProfilePic]);
   
   useEffect(() => {
-    if (location.search.includes('t=')) {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      fetchProfilePic()
+        .catch(() => {
+          localStorage.removeItem('authToken');
+          localStorage.removeItem('refreshToken');
+          setIsAuthenticated(false);
+          navigate('/login');
+        });
+    }
+  }, []);
+  
+  useEffect(() => {
+    if (location.search.includes('token=')) {
       handleOAuthCallback();
     }
   }, [location.search, handleOAuthCallback]);
-  
-  useEffect(() => {
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      fetchProfilePic();
-    }
-  }, [fetchProfilePic]);
 
   const handleLogout = async () => {
     localStorage.removeItem('authToken');

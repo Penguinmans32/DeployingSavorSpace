@@ -50,10 +50,9 @@ const Login = ({ onLogin }) => {
   const handleGoogleLogin = (e) => {
     e.preventDefault();
     const baseUrl = 'https://penguinman-backend-production.up.railway.app';
-    const redirectUri = encodeURIComponent('https://savorspace.systems/auth-callback');
+    const redirectUri = encodeURIComponent('https://savorspace.systems/homepage');
     const state = Math.random().toString(36).substring(7);
     
-    // Store state in localStorage to verify later
     localStorage.setItem('oauth_state', state);
     
     const googleAuthUrl = `${baseUrl}/oauth2/authorization/google?redirect_uri=${redirectUri}&state=${state}`;
