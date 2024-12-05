@@ -295,6 +295,7 @@ const App = () => {
       <div>
         <Navbar profilePic={profilePic} username={username} isAuthenticated={isAuthenticated} handleLogout={handleLogout} />
         <Routes>
+          <Route path="/auth-callback" element={<AuthCallback />} />
           <Route path="/" element={<LandingPage />} />
           <Route path="/homepage" element={<HomePage />} />
           <Route path="/recipes" element={<RecipePage />} />
@@ -325,7 +326,6 @@ const App = () => {
           <Route path="/forgot-password" element={<ForgotPasswordForm />} />
           <Route path="/community/recipe/:recipeId" element={<RecipeDetail />} />
           <Route path="/community/:recipeId" element={<PostingPage />} />
-          <Route path="/auth-callback" element={<AuthCallback />} />
         </Routes>
       </div>
   );
