@@ -61,10 +61,18 @@ const Login = ({ onLogin }) => {
 };
 
   const handleGithubLogin = (e) => {
-      e.preventDefault();
-      const githubAuthUrl = 'https://penguinman-backend-production.up.railway.app/oauth2/authorization/github';
-      window.location.replace(githubAuthUrl);
-  };
+  e.preventDefault();
+  const baseUrl = 'https://penguinman-backend-production.up.railway.app';
+  const redirectUri = encodeURIComponent('https://savorspace.systems/homepage');
+  const state = Math.random().toString(36).substring(7);
+  
+  // Store state in localStorage to verify later
+  localStorage.setItem('oauth_state', state);
+  
+  const githubAuthUrl = `${baseUrl}/oauth2/authorization/github?redirect_uri=${redirectUri}&state=${state}`;
+  
+  window.location.href = githubAuthUrl;
+};
 
   const handleReactivate = () => {
     navigate('/reactivate-account');
