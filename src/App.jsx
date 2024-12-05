@@ -30,7 +30,7 @@ import SettingsPage from './components/Settings';
 import Register from './components/SignupScreen';
 import './styles/MainStyles.css';
 import { getImagePath } from './utils/imageUtils';
-import AuthCallback from './components/AuthCallBack';
+
 
 // Navbar Component
 const Navbar = ({ profilePic, handleLogout, isAuthenticated }) => {
@@ -212,54 +212,46 @@ const App = () => {
     }
   }, []);
 
-  const handleAuthTokens = useCallback(() => {
-    const params = new URLSearchParams(window.location.search);
-    const token = params.get('token');
-    const refreshToken = params.get('refreshToken');
-    const error = params.get('error');
-
-    if (error) {
-      toast.error('Authentication failed. Please try again.');
-      navigate('/login');
-      return;
-    }
-
-    if (token && refreshToken) {
+  const handleOAuthCallback = useCallback(() => {
+    // Check if we're on the homepage with token parameters
+    if (location.pathname === '/homepage' && location.search.includes('token')) {
       try {
-        // Store tokens
-        localStorage.setItem('authToken', token);
-        localStorage.setItem('refreshToken', refreshToken);
-        
-        // Clean up URL
-        window.history.replaceState({}, document.title, '/homepage');
-        
-        // Set authenticated state
-        setIsAuthenticated(true);
-        
-        // Fetch user profile
-        fetchProfilePic()
-          .then(() => {
-            toast.success('Successfully logged in!');
-            navigate('/homepage', { replace: true });
-          })
-          .catch((error) => {
-            console.error('Error fetching profile:', error);
-            toast.error('Logged in but failed to fetch profile.');
-          });
+        const params = new URLSearchParams(location.search);
+        const token = params.get('token');
+        const refreshToken = params.get('refreshToken');
+
+        if (token && refreshToken) {
+          // Store tokens
+          localStorage.setItem('authToken', token);
+          localStorage.setItem('refreshToken', refreshToken);
+          
+          // Update authentication state
+          setIsAuthenticated(true);
+          
+          // Clean up URL
+          window.history.replaceState({}, document.title, '/homepage');
+          
+          // Fetch user profile
+          fetchProfilePic()
+            .then(() => {
+              toast.success('Successfully logged in!');
+            })
+            .catch((error) => {
+              console.error('Error fetching profile:', error);
+              toast.error('Logged in but failed to fetch profile.');
+            });
+        }
       } catch (error) {
-        console.error('Error handling authentication:', error);
-        toast.error('Something went wrong. Please try again.');
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('refreshToken');
-        setIsAuthenticated(false);
+        console.error('Error handling OAuth callback:', error);
+        toast.error('Authentication failed');
         navigate('/login');
       }
     }
-  }, [navigate, fetchProfilePic]);
+  }, [location, navigate, fetchProfilePic]);
   
   useEffect(() => {
-    handleAuthTokens();
-  }, [handleAuthTokens]);
+    handleOAuthCallback();
+  }, [handleOAuthCallback]);
 
   useEffect(() => {
     const token = localStorage.getItem('authToken');
@@ -296,7 +288,6 @@ const App = () => {
         <Navbar profilePic={profilePic} username={username} isAuthenticated={isAuthenticated} handleLogout={handleLogout} />
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/auth-callback" element={<AuthCallback />} />
           <Route path="/homepage" element={<HomePage />} />
           <Route path="/recipes" element={<RecipePage />} />
           <Route path="/community" element={<PostingPage isAuthenticated={isAuthenticated} />} />
